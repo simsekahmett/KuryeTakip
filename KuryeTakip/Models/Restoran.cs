@@ -8,6 +8,7 @@ namespace KuryeTakip.Models
 {
     public class Restoran
     {
+        public int RestoranId { get; set; }
         public string RestoranIsim { get; set; }
     }
 }

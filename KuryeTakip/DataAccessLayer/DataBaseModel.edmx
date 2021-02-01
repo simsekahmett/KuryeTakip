@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="UrunSet" EntityType="Model1.Store.UrunSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="KuryeSet" EntityType="Model1.Store.KuryeSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RestoranSet" EntityType="Model1.Store.RestoranSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UrunKurye" Association="Model1.Store.UrunKurye">
+      <End Role="Urun" EntitySet="UrunSet" />
+      <End Role="Kurye" EntitySet="KuryeSet" />
+    </AssociationSet>
+    <AssociationSet Name="UrunRestoran" Association="Model1.Store.UrunRestoran">
+      <End Role="Urun" EntitySet="UrunSet" />
+      <End Role="Restoran" EntitySet="RestoranSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UrunSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kurye_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KuryeSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RestoranSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Urun_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UrunKurye">
+    <End Role="Urun" Type="Model1.Store.UrunSet" Multiplicity="*" />
+    <End Role="Kurye" Type="Model1.Store.KuryeSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Kurye">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Urun">
+        <PropertyRef Name="Kurye_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UrunRestoran">
+    <End Role="Urun" Type="Model1.Store.UrunSet" Multiplicity="1" />
+    <End Role="Restoran" Type="Model1.Store.RestoranSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urun">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Restoran">
+        <PropertyRef Name="Urun_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SiparisSet" EntityType="Model1.Siparis" />
+          <EntitySet Name="KuryeSet" EntityType="Model1.Kurye" />
+          <EntitySet Name="RestoranSet" EntityType="Model1.Restoran" />
+          <AssociationSet Name="SiparisKurye" Association="Model1.SiparisKurye">
+            <End Role="Siparis" EntitySet="SiparisSet" />
+            <End Role="Kurye" EntitySet="KuryeSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Siparis">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HazirlanmaTimer" Type="String" Nullable="false" />
+          <Property Name="KuryeTimer" Type="String" Nullable="false" />
+          <Property Name="Durum" Type="String" Nullable="false" />
+          <NavigationProperty Name="Kurye" Relationship="Model1.SiparisKurye" FromRole="Siparis" ToRole="Kurye" />
+        </EntityType>
+        <EntityType Name="Kurye">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Isim" Type="String" Nullable="false" />
+          <NavigationProperty Name="Siparis" Relationship="Model1.SiparisKurye" FromRole="Kurye" ToRole="Siparis" />
+        </EntityType>
+        <EntityType Name="Restoran">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Isim" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="SiparisKurye">
+          <End Type="Model1.Siparis" Role="Siparis" Multiplicity="*" />
+          <End Type="Model1.Kurye" Role="Kurye" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="SiparisSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Siparis)">
+        <MappingFragment StoreEntitySet="UrunSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KuryeSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Kurye)">
+        <MappingFragment StoreEntitySet="KuryeSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RestoranSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Restoran)">
+        <MappingFragment StoreEntitySet="RestoranSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

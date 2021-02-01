@@ -29,12 +29,17 @@ namespace KuryeTakip
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabKuryeTakip = new System.Windows.Forms.TabPage();
             this.tabRaporlama = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabAyar = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tabKayit = new System.Windows.Forms.TabPage();
+            this.kuryeTakipMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemEkle = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemCikar = new System.Windows.Forms.ToolStripMenuItem();
             this.siparisNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.restoran = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.kurye = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -43,10 +48,10 @@ namespace KuryeTakip
             this.kuryeYolda = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dagitimSuresi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.teslimEdildi = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.tabKayit = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabKuryeTakip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.kuryeTakipMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -104,7 +109,8 @@ namespace KuryeTakip
             // 
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            this.dataGridView1.ColumnHeadersHeight = 50;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.siparisNo,
             this.restoran,
@@ -117,14 +123,52 @@ namespace KuryeTakip
             this.dataGridView1.Location = new System.Drawing.Point(6, 6);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 45;
+            this.dataGridView1.RowTemplate.Height = 150;
+            this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.Size = new System.Drawing.Size(1145, 485);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
+            // 
+            // tabKayit
+            // 
+            this.tabKayit.Location = new System.Drawing.Point(4, 22);
+            this.tabKayit.Name = "tabKayit";
+            this.tabKayit.Padding = new System.Windows.Forms.Padding(3);
+            this.tabKayit.Size = new System.Drawing.Size(1157, 497);
+            this.tabKayit.TabIndex = 3;
+            this.tabKayit.Text = "Kayıt";
+            this.tabKayit.UseVisualStyleBackColor = true;
+            // 
+            // kuryeTakipMenu
+            // 
+            this.kuryeTakipMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemEkle,
+            this.menuItemCikar});
+            this.kuryeTakipMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table;
+            this.kuryeTakipMenu.Name = "kuryeTakipMenu";
+            this.kuryeTakipMenu.Size = new System.Drawing.Size(102, 48);
+            this.kuryeTakipMenu.Text = "Ekle/Çıkar";
+            // 
+            // menuItemEkle
+            // 
+            this.menuItemEkle.Name = "menuItemEkle";
+            this.menuItemEkle.Size = new System.Drawing.Size(101, 22);
+            this.menuItemEkle.Text = "Ekle";
+            this.menuItemEkle.Click += new System.EventHandler(this.menuItemEkle_Click);
+            // 
+            // menuItemCikar
+            // 
+            this.menuItemCikar.Name = "menuItemCikar";
+            this.menuItemCikar.Size = new System.Drawing.Size(101, 22);
+            this.menuItemCikar.Text = "Çıkar";
+            this.menuItemCikar.Click += new System.EventHandler(this.menuItemCikar_Click);
             // 
             // siparisNo
             // 
             this.siparisNo.FillWeight = 150F;
             this.siparisNo.HeaderText = "Sipariş No";
             this.siparisNo.Name = "siparisNo";
+            this.siparisNo.ReadOnly = true;
             // 
             // restoran
             // 
@@ -168,16 +212,6 @@ namespace KuryeTakip
             this.teslimEdildi.HeaderText = "Teslim Edildi";
             this.teslimEdildi.Name = "teslimEdildi";
             // 
-            // tabKayit
-            // 
-            this.tabKayit.Location = new System.Drawing.Point(4, 22);
-            this.tabKayit.Name = "tabKayit";
-            this.tabKayit.Padding = new System.Windows.Forms.Padding(3);
-            this.tabKayit.Size = new System.Drawing.Size(1157, 497);
-            this.tabKayit.TabIndex = 3;
-            this.tabKayit.Text = "Kayıt";
-            this.tabKayit.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -187,9 +221,11 @@ namespace KuryeTakip
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Kurye Takip v1.0";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabKuryeTakip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.kuryeTakipMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -202,6 +238,10 @@ namespace KuryeTakip
         private System.Windows.Forms.TabPage tabAyar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TabPage tabKayit;
+        private System.Windows.Forms.ContextMenuStrip kuryeTakipMenu;
+        private System.Windows.Forms.ToolStripMenuItem menuItemEkle;
+        private System.Windows.Forms.ToolStripMenuItem menuItemCikar;
         private System.Windows.Forms.DataGridViewTextBoxColumn siparisNo;
         private System.Windows.Forms.DataGridViewComboBoxColumn restoran;
         private System.Windows.Forms.DataGridViewComboBoxColumn kurye;
@@ -210,7 +250,6 @@ namespace KuryeTakip
         private System.Windows.Forms.DataGridViewCheckBoxColumn kuryeYolda;
         private System.Windows.Forms.DataGridViewTextBoxColumn dagitimSuresi;
         private System.Windows.Forms.DataGridViewCheckBoxColumn teslimEdildi;
-        private System.Windows.Forms.TabPage tabKayit;
     }
 }
 

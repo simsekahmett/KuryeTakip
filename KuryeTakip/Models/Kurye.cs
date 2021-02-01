@@ -8,7 +8,7 @@ namespace KuryeTakip.Models
 {
     public class Kurye
     {
+        public int KuryeId { get; set; }
         public string Isim { get; set; }
-        public int TimerSaniye { get; set; }
     }
 }
