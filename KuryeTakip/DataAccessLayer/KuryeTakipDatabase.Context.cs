@@ -13,10 +13,10 @@ namespace KuryeTakip.DataAccessLayer
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Model1Container : DbContext
+    public partial class KuryeTakipEntityContainer : DbContext
     {
-        public Model1Container()
-            : base("name=Model1Container")
+        public KuryeTakipEntityContainer()
+            : base("name=KuryeTakipEntityContainer")
         {
         }
     
@@ -25,8 +25,8 @@ namespace KuryeTakip.DataAccessLayer
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Siparis> SiparisSet { get; set; }
         public virtual DbSet<Kurye> KuryeSet { get; set; }
         public virtual DbSet<Restoran> RestoranSet { get; set; }
+        public virtual DbSet<Siparis> SiparisSet { get; set; }
     }
 }
