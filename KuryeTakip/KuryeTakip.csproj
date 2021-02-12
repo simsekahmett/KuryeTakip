@@ -58,9 +58,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccessLayer\Bolge.cs">
-      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
-    </Compile>
+    <Compile Include="DataAccessLayer\Models\Bolge.cs" />
+    <Compile Include="DataAccessLayer\Models\Kurye.cs" />
+    <Compile Include="DataAccessLayer\Models\Restoran.cs" />
+    <Compile Include="DataAccessLayer\Models\Siparis.cs" />
     <Compile Include="DataAccessLayer\Services\BolgeService.cs" />
     <Compile Include="DataAccessLayer\Services\KuryeService.cs" />
     <Compile Include="DataAccessLayer\DBInitializer.cs" />
@@ -71,9 +72,6 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccessLayer\Kurye.cs">
-      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccessLayer\KuryeTakipDatabase.Context.cs">
       <AutoGen>True</AutoGen>
@@ -94,12 +92,6 @@
     <Compile Include="Models\SiparisDurumu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataAccessLayer\Restoran.cs">
-      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccessLayer\Siparis.cs">
-      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
-    </Compile>
     <Compile Include="Utils\Logger.cs">
       <SubType>Form</SubType>
     </Compile>
