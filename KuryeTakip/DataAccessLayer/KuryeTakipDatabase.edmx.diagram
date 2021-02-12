@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="KuryeTakip.Siparis" Width="1.5" PointX="7.875" PointY="1.625" />
         <AssociationConnector Association="KuryeTakip.SiparisKurye" />
         <AssociationConnector Association="KuryeTakip.SiparisRestoran" />
+        <EntityTypeShape EntityType="KuryeTakip.Bolge" Width="1.5" PointX="7.875" PointY="4.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

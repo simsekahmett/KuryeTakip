@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 02/01/2021 20:35:04
--- Generated from EDMX file: C:\Users\a.simsek\Desktop\Dev Projects\KuryeTakip\KuryeTakip\KuryeTakipDatabase.edmx
+-- Date Created: 02/12/2021 17:27:43
+-- Generated from EDMX file: C:\Users\a.simsek\Desktop\Dev Projects\KuryeTakip\KuryeTakip\DataAccessLayer\KuryeTakipDatabase.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,11 +17,26 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_SiparisKurye]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SiparisSet] DROP CONSTRAINT [FK_SiparisKurye];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SiparisRestoran]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SiparisSet] DROP CONSTRAINT [FK_SiparisRestoran];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[KuryeSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[KuryeSet];
+GO
+IF OBJECT_ID(N'[dbo].[RestoranSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RestoranSet];
+GO
+IF OBJECT_ID(N'[dbo].[SiparisSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[SiparisSet];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -51,6 +66,13 @@ CREATE TABLE [dbo].[SiparisSet] (
 );
 GO
 
+-- Creating table 'BolgeSet'
+CREATE TABLE [dbo].[BolgeSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Isim] nvarchar(max)  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -70,6 +92,12 @@ GO
 -- Creating primary key on [Id] in table 'SiparisSet'
 ALTER TABLE [dbo].[SiparisSet]
 ADD CONSTRAINT [PK_SiparisSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'BolgeSet'
+ALTER TABLE [dbo].[BolgeSet]
+ADD CONSTRAINT [PK_BolgeSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

@@ -12,12 +12,9 @@ namespace KuryeTakip.DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Siparis
+    public partial class Bolge
     {
         public int Id { get; set; }
-        public string HazirlanmaSuresi { get; set; }
-        public string TeslimatSuresi { get; set; }
-        public virtual Kurye Kurye { get; set; }
-        public virtual Restoran Restoran { get; set; }
+        public string Isim { get; set; }
     }
 }

@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KuryeTakip.DataAccessLayer
 {
-    public static class RestoranService
+    public static class BolgeService
     {
-        public static bool RestoranKaydet(Restoran restoran)
+        public static bool BolgeKaydet(Bolge bolge)
         {
             try
             {
                 using (var context = new KuryeTakipEntityContainer())
                 {
-                    var kayit = new Restoran()
+                    var kayit = new Bolge()
                     {
-                        Isim = restoran.Isim
+                        Isim = bolge.Isim
                     };
 
-                    context.RestoranSet.Add(kayit);
+                    context.BolgeSet.Add(kayit);
 
                     context.SaveChanges();
                 }
@@ -32,14 +30,14 @@ namespace KuryeTakip.DataAccessLayer
             return true;
         }
 
-        public static bool RestoranSil(Restoran restoran)
+        public static bool BolgeSil(Bolge bolge)
         {
             using (var context = new KuryeTakipEntityContainer())
             {
-                var silinecekRestoran = context.RestoranSet.SingleOrDefault(r => r.Id == restoran.Id);
+                var silinecekBolge = context.BolgeSet.SingleOrDefault(b => b.Id == bolge.Id);
 
-                if (silinecekRestoran != null)
-                    context.RestoranSet.Remove(silinecekRestoran);
+                if (silinecekBolge != null)
+                    context.BolgeSet.Remove(silinecekBolge);
 
                 context.SaveChanges();
             }
@@ -47,16 +45,16 @@ namespace KuryeTakip.DataAccessLayer
             return true;
         }
 
-        public static List<Restoran> RestoranlariGetir()
+        public static List<Bolge> BolgeleriGetir()
         {
-            List<Restoran> kayitliRestoranlar = new List<Restoran>();
+            List<Bolge> kayitliBolgeler = new List<Bolge>();
 
             using (var context = new KuryeTakipEntityContainer())
             {
-                kayitliRestoranlar = context.RestoranSet.ToList();
+                kayitliBolgeler = context.BolgeSet.ToList();
             }
 
-            return kayitliRestoranlar;
+            return kayitliBolgeler;
         }
     }
 }

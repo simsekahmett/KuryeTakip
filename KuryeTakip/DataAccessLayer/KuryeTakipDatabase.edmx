@@ -9,6 +9,7 @@
     <EntitySet Name="KuryeSet" EntityType="KuryeTakip.Store.KuryeSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RestoranSet" EntityType="KuryeTakip.Store.RestoranSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SiparisSet" EntityType="KuryeTakip.Store.SiparisSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BolgeSet" EntityType="KuryeTakip.Store.BolgeSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="SiparisKurye" Association="KuryeTakip.Store.SiparisKurye">
       <End Role="Siparis" EntitySet="SiparisSet" />
       <End Role="Kurye" EntitySet="KuryeSet" />
@@ -41,6 +42,13 @@
     <Property Name="TeslimatSuresi" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Kurye_Id" Type="int" Nullable="false" />
     <Property Name="Restoran_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BolgeSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Isim" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="SiparisKurye">
     <End Role="Siparis" Type="KuryeTakip.Store.SiparisSet" Multiplicity="*" />
@@ -82,6 +90,7 @@
             <End Role="Siparis" EntitySet="SiparisSet" />
             <End Role="Restoran" EntitySet="RestoranSet" />
           </AssociationSet>
+          <EntitySet Name="BolgeSet" EntityType="KuryeTakip.Bolge" />
         </EntityContainer>
         <EntityType Name="Kurye">
           <Key>
@@ -117,6 +126,13 @@
           <End Type="KuryeTakip.Siparis" Role="Siparis" Multiplicity="*" />
           <End Type="KuryeTakip.Restoran" Role="Restoran" Multiplicity="1" />
         </Association>
+        <EntityType Name="Bolge">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Isim" Type="String" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -145,6 +161,14 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="HazirlanmaSuresi" ColumnName="HazirlanmaSuresi" />
           <ScalarProperty Name="TeslimatSuresi" ColumnName="TeslimatSuresi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BolgeSet">
+      <EntityTypeMapping TypeName="IsTypeOf(KuryeTakip.Bolge)">
+        <MappingFragment StoreEntitySet="BolgeSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Isim" ColumnName="Isim" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
