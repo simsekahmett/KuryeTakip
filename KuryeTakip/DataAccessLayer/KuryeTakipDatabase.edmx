@@ -10,14 +10,8 @@
     <EntitySet Name="RestoranSet" EntityType="KuryeTakip.Store.RestoranSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SiparisSet" EntityType="KuryeTakip.Store.SiparisSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="BolgeSet" EntityType="KuryeTakip.Store.BolgeSet" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="SiparisKurye" Association="KuryeTakip.Store.SiparisKurye">
-      <End Role="Siparis" EntitySet="SiparisSet" />
-      <End Role="Kurye" EntitySet="KuryeSet" />
-    </AssociationSet>
-    <AssociationSet Name="SiparisRestoran" Association="KuryeTakip.Store.SiparisRestoran">
-      <End Role="Siparis" EntitySet="SiparisSet" />
-      <End Role="Restoran" EntitySet="RestoranSet" />
-    </AssociationSet>
+    <EntitySet Name="AyarSet" EntityType="KuryeTakip.Store.AyarSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OdemeYontemiSet" EntityType="KuryeTakip.Store.OdemeYontemiSet" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
   <EntityType Name="KuryeSet">
     <Key>
@@ -40,8 +34,11 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="HazirlanmaSuresi" Type="nvarchar(max)" Nullable="false" />
     <Property Name="TeslimatSuresi" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Kurye_Id" Type="int" Nullable="false" />
-    <Property Name="Restoran_Id" Type="int" Nullable="false" />
+    <Property Name="KuryeIsim" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OdemeYontem" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RestoranIsim" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BolgeIsim" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Tarih" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="BolgeSet">
     <Key>
@@ -50,30 +47,20 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Isim" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <Association Name="SiparisKurye">
-    <End Role="Siparis" Type="KuryeTakip.Store.SiparisSet" Multiplicity="*" />
-    <End Role="Kurye" Type="KuryeTakip.Store.KuryeSet" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Kurye">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Siparis">
-        <PropertyRef Name="Kurye_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="SiparisRestoran">
-    <End Role="Siparis" Type="KuryeTakip.Store.SiparisSet" Multiplicity="*" />
-    <End Role="Restoran" Type="KuryeTakip.Store.RestoranSet" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Restoran">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Siparis">
-        <PropertyRef Name="Restoran_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
+  <EntityType Name="AyarSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TelegramToken" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OdemeYontemiSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="YontemIsim" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -82,15 +69,9 @@
           <EntitySet Name="KuryeSet" EntityType="KuryeTakip.Kurye" />
           <EntitySet Name="RestoranSet" EntityType="KuryeTakip.Restoran" />
           <EntitySet Name="SiparisSet" EntityType="KuryeTakip.Siparis" />
-          <AssociationSet Name="SiparisKurye" Association="KuryeTakip.SiparisKurye">
-            <End Role="Siparis" EntitySet="SiparisSet" />
-            <End Role="Kurye" EntitySet="KuryeSet" />
-          </AssociationSet>
-          <AssociationSet Name="SiparisRestoran" Association="KuryeTakip.SiparisRestoran">
-            <End Role="Siparis" EntitySet="SiparisSet" />
-            <End Role="Restoran" EntitySet="RestoranSet" />
-          </AssociationSet>
           <EntitySet Name="BolgeSet" EntityType="KuryeTakip.Bolge" />
+          <EntitySet Name="AyarSet" EntityType="KuryeTakip.Ayar" />
+          <EntitySet Name="OdemeYontemiSet" EntityType="KuryeTakip.OdemeYontemi" />
         </EntityContainer>
         <EntityType Name="Kurye">
           <Key>
@@ -98,7 +79,6 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Isim" Type="String" Nullable="false" />
-          <NavigationProperty Name="Siparis" Relationship="KuryeTakip.SiparisKurye" FromRole="Kurye" ToRole="Siparis" />
         </EntityType>
         <EntityType Name="Restoran">
           <Key>
@@ -106,7 +86,6 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Isim" Type="String" Nullable="false" />
-          <NavigationProperty Name="Siparis" Relationship="KuryeTakip.SiparisRestoran" FromRole="Restoran" ToRole="Siparis" />
         </EntityType>
         <EntityType Name="Siparis">
           <Key>
@@ -115,23 +94,32 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HazirlanmaSuresi" Type="String" Nullable="false" />
           <Property Name="TeslimatSuresi" Type="String" Nullable="false" />
-          <NavigationProperty Name="Kurye" Relationship="KuryeTakip.SiparisKurye" FromRole="Siparis" ToRole="Kurye" />
-          <NavigationProperty Name="Restoran" Relationship="KuryeTakip.SiparisRestoran" FromRole="Siparis" ToRole="Restoran" />
+          <Property Name="KuryeIsim" Type="String" Nullable="false" />
+          <Property Name="OdemeYontem" Type="String" Nullable="false" />
+          <Property Name="RestoranIsim" Type="String" Nullable="false" />
+          <Property Name="BolgeIsim" Type="String" Nullable="false" />
+          <Property Name="Tarih" Type="String" Nullable="false" />
         </EntityType>
-        <Association Name="SiparisKurye">
-          <End Type="KuryeTakip.Siparis" Role="Siparis" Multiplicity="*" />
-          <End Type="KuryeTakip.Kurye" Role="Kurye" Multiplicity="1" />
-        </Association>
-        <Association Name="SiparisRestoran">
-          <End Type="KuryeTakip.Siparis" Role="Siparis" Multiplicity="*" />
-          <End Type="KuryeTakip.Restoran" Role="Restoran" Multiplicity="1" />
-        </Association>
         <EntityType Name="Bolge">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Isim" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ayar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TelegramToken" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OdemeYontemi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YontemIsim" Type="String" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -161,6 +149,11 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="HazirlanmaSuresi" ColumnName="HazirlanmaSuresi" />
           <ScalarProperty Name="TeslimatSuresi" ColumnName="TeslimatSuresi" />
+          <ScalarProperty Name="KuryeIsim" ColumnName="KuryeIsim" />
+          <ScalarProperty Name="OdemeYontem" ColumnName="OdemeYontem" />
+          <ScalarProperty Name="RestoranIsim" ColumnName="RestoranIsim" />
+          <ScalarProperty Name="BolgeIsim" ColumnName="BolgeIsim" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -172,22 +165,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="SiparisKurye" TypeName="KuryeTakip.SiparisKurye" StoreEntitySet="SiparisSet">
-      <EndProperty Name="Kurye">
-        <ScalarProperty Name="Id" ColumnName="Kurye_Id" />
-      </EndProperty>
-      <EndProperty Name="Siparis">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="SiparisRestoran" TypeName="KuryeTakip.SiparisRestoran" StoreEntitySet="SiparisSet">
-      <EndProperty Name="Restoran">
-        <ScalarProperty Name="Id" ColumnName="Restoran_Id" />
-      </EndProperty>
-      <EndProperty Name="Siparis">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
+    <EntitySetMapping Name="AyarSet">
+      <EntityTypeMapping TypeName="IsTypeOf(KuryeTakip.Ayar)">
+        <MappingFragment StoreEntitySet="AyarSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TelegramToken" ColumnName="TelegramToken" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OdemeYontemiSet">
+      <EntityTypeMapping TypeName="IsTypeOf(KuryeTakip.OdemeYontemi)">
+        <MappingFragment StoreEntitySet="OdemeYontemiSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="YontemIsim" ColumnName="YontemIsim" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

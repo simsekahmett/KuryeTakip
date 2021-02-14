@@ -4,20 +4,20 @@ using System.Linq;
 
 namespace KuryeTakip.DataAccessLayer
 {
-    public static class RestoranService
+    public static class OdemeYontemiService
     {
-        public static bool RestoranKaydet(Restoran restoran)
+        public static bool OdemeYontemiKaydet(OdemeYontemi odemeYontemi)
         {
             try
             {
                 using (var context = new KuryeTakipEntityContainer())
                 {
-                    var kayit = new Restoran()
+                    var kayit = new OdemeYontemi()
                     {
-                        Isim = restoran.Isim
+                        YontemIsim = odemeYontemi.YontemIsim
                     };
 
-                    context.RestoranSet.Add(kayit);
+                    context.OdemeYontemiSet.Add(kayit);
 
                     context.SaveChanges();
                 }
@@ -30,16 +30,16 @@ namespace KuryeTakip.DataAccessLayer
             }
         }
 
-        public static bool RestoranSil(Restoran restoran)
+        public static bool OdemeYontemiSil(OdemeYontemi odemeYontemi)
         {
             try
             {
                 using (var context = new KuryeTakipEntityContainer())
                 {
-                    var silinecekRestoran = context.RestoranSet.SingleOrDefault(r => r.Id == restoran.Id);
+                    var silinecekOdemeYontemi = context.OdemeYontemiSet.SingleOrDefault(y => y.Id == odemeYontemi.Id);
 
-                    if (silinecekRestoran != null)
-                        context.RestoranSet.Remove(silinecekRestoran);
+                    if (silinecekOdemeYontemi != null)
+                        context.OdemeYontemiSet.Remove(silinecekOdemeYontemi);
 
                     context.SaveChanges();
                 }
@@ -52,15 +52,15 @@ namespace KuryeTakip.DataAccessLayer
             }
         }
 
-        public static List<Restoran> RestoranlariGetir()
+        public static List<OdemeYontemi> OdemeYontemleriGetir()
         {
-            List<Restoran> kayitliRestoranlar = new List<Restoran>();
+            List<OdemeYontemi> kayitliOdemeYontemleri = new List<OdemeYontemi>();
 
             try
             {
                 using (var context = new KuryeTakipEntityContainer())
                 {
-                    kayitliRestoranlar = context.RestoranSet.ToList();
+                    kayitliOdemeYontemleri = context.OdemeYontemiSet.ToList();
                 }
             }
             catch (Exception ex)
@@ -68,7 +68,7 @@ namespace KuryeTakip.DataAccessLayer
                 throw ex;
             }
 
-            return kayitliRestoranlar;
+            return kayitliOdemeYontemleri;
         }
     }
 }

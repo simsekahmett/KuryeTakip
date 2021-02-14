@@ -11,18 +11,37 @@ namespace KuryeTakip.DataAccessLayer
     {
         protected override void Seed(KuryeTakipEntityContainer context)
         {
-            Kurye kurye = new Kurye()
-            { 
-                Isim = "Ahmet Şimşek"
-            };
-
-            Restoran restoran = new Restoran()
+            try
             {
-                Isim = "ABSDev Cafe"
-            };
+                Kurye kurye = new Kurye()
+                {
+                    Isim = "Ahmet Şimşek"
+                };
 
-            context.KuryeSet.Add(kurye);
-            context.RestoranSet.Add(restoran);
+                Restoran restoran = new Restoran()
+                {
+                    Isim = "ABSDev Cafe"
+                };
+
+                Bolge bolge = new Bolge()
+                {
+                    Isim = "A Bölgesi"
+                };
+
+                OdemeYontemi odemeYontemi = new OdemeYontemi()
+                {
+                    YontemIsim = "Nakit"
+                };
+
+                context.KuryeSet.Add(kurye);
+                context.RestoranSet.Add(restoran);
+                context.BolgeSet.Add(bolge);
+                context.OdemeYontemiSet.Add(odemeYontemi);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

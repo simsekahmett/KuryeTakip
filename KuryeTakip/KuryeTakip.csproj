@@ -42,6 +42,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -56,17 +59,35 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Telegram.Bot, Version=15.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telegram.Bot.15.7.1\lib\net45\Telegram.Bot.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccessLayer\Models\Bolge.cs" />
-    <Compile Include="DataAccessLayer\Models\Kurye.cs" />
-    <Compile Include="DataAccessLayer\Models\Restoran.cs" />
-    <Compile Include="DataAccessLayer\Models\Siparis.cs" />
+    <Compile Include="DataAccessLayer\Ayar.cs">
+      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessLayer\Bolge.cs">
+      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessLayer\Kurye.cs">
+      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessLayer\OdemeYontemi.cs">
+      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessLayer\Restoran.cs">
+      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataAccessLayer\Services\BolgeService.cs" />
     <Compile Include="DataAccessLayer\Services\KuryeService.cs" />
     <Compile Include="DataAccessLayer\DBInitializer.cs" />
+    <Compile Include="DataAccessLayer\Services\OdemeYontemiService.cs" />
     <Compile Include="DataAccessLayer\Services\RestoranService.cs" />
     <Compile Include="DataAccessLayer\Services\SiparisService.cs" />
+    <Compile Include="DataAccessLayer\Siparis.cs">
+      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +109,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KuryeTakipDatabase.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DataTableHelper.cs" />
     <Compile Include="Helpers\DGVRowHelper.cs" />
     <Compile Include="Models\SiparisDurumu.cs" />
     <Compile Include="Program.cs" />
@@ -96,6 +118,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utils\Startup.cs" />
+    <Compile Include="Utils\TelegramHelper.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

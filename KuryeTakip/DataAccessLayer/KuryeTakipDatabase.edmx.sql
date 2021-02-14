@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 02/12/2021 17:27:43
+-- Date Created: 02/13/2021 23:28:48
 -- Generated from EDMX file: C:\Users\a.simsek\Desktop\Dev Projects\KuryeTakip\KuryeTakip\DataAccessLayer\KuryeTakipDatabase.edmx
 -- --------------------------------------------------
 
@@ -17,12 +17,6 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_SiparisKurye]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SiparisSet] DROP CONSTRAINT [FK_SiparisKurye];
-GO
-IF OBJECT_ID(N'[dbo].[FK_SiparisRestoran]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SiparisSet] DROP CONSTRAINT [FK_SiparisRestoran];
-GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -36,6 +30,15 @@ IF OBJECT_ID(N'[dbo].[RestoranSet]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[SiparisSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[SiparisSet];
+GO
+IF OBJECT_ID(N'[dbo].[BolgeSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BolgeSet];
+GO
+IF OBJECT_ID(N'[dbo].[AyarSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AyarSet];
+GO
+IF OBJECT_ID(N'[dbo].[OdemeYontemiSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OdemeYontemiSet];
 GO
 
 -- --------------------------------------------------
@@ -61,8 +64,11 @@ CREATE TABLE [dbo].[SiparisSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [HazirlanmaSuresi] nvarchar(max)  NOT NULL,
     [TeslimatSuresi] nvarchar(max)  NOT NULL,
-    [Kurye_Id] int  NOT NULL,
-    [Restoran_Id] int  NOT NULL
+    [KuryeIsim] nvarchar(max)  NOT NULL,
+    [OdemeYontem] nvarchar(max)  NOT NULL,
+    [RestoranIsim] nvarchar(max)  NOT NULL,
+    [BolgeIsim] nvarchar(max)  NOT NULL,
+    [Tarih] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -70,6 +76,20 @@ GO
 CREATE TABLE [dbo].[BolgeSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Isim] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'AyarSet'
+CREATE TABLE [dbo].[AyarSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [TelegramToken] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'OdemeYontemiSet'
+CREATE TABLE [dbo].[OdemeYontemiSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [YontemIsim] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -101,39 +121,21 @@ ADD CONSTRAINT [PK_BolgeSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
+-- Creating primary key on [Id] in table 'AyarSet'
+ALTER TABLE [dbo].[AyarSet]
+ADD CONSTRAINT [PK_AyarSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'OdemeYontemiSet'
+ALTER TABLE [dbo].[OdemeYontemiSet]
+ADD CONSTRAINT [PK_OdemeYontemiSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
-
--- Creating foreign key on [Kurye_Id] in table 'SiparisSet'
-ALTER TABLE [dbo].[SiparisSet]
-ADD CONSTRAINT [FK_SiparisKurye]
-    FOREIGN KEY ([Kurye_Id])
-    REFERENCES [dbo].[KuryeSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_SiparisKurye'
-CREATE INDEX [IX_FK_SiparisKurye]
-ON [dbo].[SiparisSet]
-    ([Kurye_Id]);
-GO
-
--- Creating foreign key on [Restoran_Id] in table 'SiparisSet'
-ALTER TABLE [dbo].[SiparisSet]
-ADD CONSTRAINT [FK_SiparisRestoran]
-    FOREIGN KEY ([Restoran_Id])
-    REFERENCES [dbo].[RestoranSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_SiparisRestoran'
-CREATE INDEX [IX_FK_SiparisRestoran]
-ON [dbo].[SiparisSet]
-    ([Restoran_Id]);
-GO
 
 -- --------------------------------------------------
 -- Script has ended

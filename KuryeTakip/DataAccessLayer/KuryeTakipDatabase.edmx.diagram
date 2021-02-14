@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d038d69e63324a4f9e1cfb47bc936889" Name="Diagram1" >
+      <Diagram DiagramId="d038d69e63324a4f9e1cfb47bc936889" Name="Diagram1" ZoomLevel="92" >
         <EntityTypeShape EntityType="KuryeTakip.Kurye" Width="1.5" PointX="5.375" PointY="1.625" />
         <EntityTypeShape EntityType="KuryeTakip.Restoran" Width="1.5" PointX="10.125" PointY="1.625" />
         <EntityTypeShape EntityType="KuryeTakip.Siparis" Width="1.5" PointX="7.875" PointY="1.625" />
-        <AssociationConnector Association="KuryeTakip.SiparisKurye" />
-        <AssociationConnector Association="KuryeTakip.SiparisRestoran" />
-        <EntityTypeShape EntityType="KuryeTakip.Bolge" Width="1.5" PointX="7.875" PointY="4.125" />
+        <EntityTypeShape EntityType="KuryeTakip.Bolge" Width="1.5" PointX="7.875" PointY="4.5" />
+        <EntityTypeShape EntityType="KuryeTakip.Ayar" Width="1.5" PointX="10.25" PointY="4.125" />
+        <EntityTypeShape EntityType="KuryeTakip.OdemeYontemi" Width="1.5" PointX="5.375" PointY="4.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

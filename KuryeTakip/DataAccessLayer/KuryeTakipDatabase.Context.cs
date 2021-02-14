@@ -29,5 +29,7 @@ namespace KuryeTakip.DataAccessLayer
         public virtual DbSet<Restoran> RestoranSet { get; set; }
         public virtual DbSet<Siparis> SiparisSet { get; set; }
         public virtual DbSet<Bolge> BolgeSet { get; set; }
+        public virtual DbSet<Ayar> AyarSet { get; set; }
+        public virtual DbSet<OdemeYontemi> OdemeYontemiSet { get; set; }
     }
 }

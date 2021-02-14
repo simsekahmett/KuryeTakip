@@ -15,15 +15,18 @@ namespace KuryeTakip.Utils
             {
                 using(var context = new KuryeTakipEntityContainer())
                 {
-                    DBInitializer initializer = new DBInitializer();
-                    initializer.InitializeDatabase(context);
+                    if(!context.Database.Exists())
+                    {
+                        DBInitializer initializer = new DBInitializer();
+                        initializer.InitializeDatabase(context);
+                    }
                 }
 
                 return true;
             }
             catch(Exception ex)
             {
-                throw ex.InnerException;
+                throw ex;
             }
         }
     }

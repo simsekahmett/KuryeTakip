@@ -16,22 +16,30 @@ namespace KuryeTakip.DataAccessLayer
 
                     context.SaveChanges();
                 }
+             
+                return true;
             }
             catch (Exception ex)
             {
-                throw ex.InnerException;
+                throw ex;
             }
-
-            return true;
         }
 
         public static List<Siparis> SiparisleriGetir()
         {
             List<Siparis> kayitliSiparisler = new List<Siparis>();
 
-            using (var context = new KuryeTakipEntityContainer())
+            try
             {
-                kayitliSiparisler = context.SiparisSet.ToList();
+                using (var context = new KuryeTakipEntityContainer())
+                {
+                    kayitliSiparisler = context.SiparisSet.ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
             return kayitliSiparisler;

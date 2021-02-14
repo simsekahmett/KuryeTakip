@@ -21,37 +21,51 @@ namespace KuryeTakip.DataAccessLayer
 
                     context.SaveChanges();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
-                throw ex.InnerException;
+                throw ex;
             }
-
-            return true;
         }
 
         public static bool BolgeSil(Bolge bolge)
         {
-            using (var context = new KuryeTakipEntityContainer())
+            try
             {
-                var silinecekBolge = context.BolgeSet.SingleOrDefault(b => b.Id == bolge.Id);
+                using (var context = new KuryeTakipEntityContainer())
+                {
+                    var silinecekBolge = context.BolgeSet.SingleOrDefault(b => b.Id == bolge.Id);
 
-                if (silinecekBolge != null)
-                    context.BolgeSet.Remove(silinecekBolge);
+                    if (silinecekBolge != null)
+                        context.BolgeSet.Remove(silinecekBolge);
 
-                context.SaveChanges();
+                    context.SaveChanges();
+                }
+
+                return true;
             }
-
-            return true;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public static List<Bolge> BolgeleriGetir()
         {
             List<Bolge> kayitliBolgeler = new List<Bolge>();
 
-            using (var context = new KuryeTakipEntityContainer())
+            try
             {
-                kayitliBolgeler = context.BolgeSet.ToList();
+                using (var context = new KuryeTakipEntityContainer())
+                {
+                    kayitliBolgeler = context.BolgeSet.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
             return kayitliBolgeler;

@@ -21,37 +21,51 @@ namespace KuryeTakip.DataAccessLayer
 
                     context.SaveChanges();
                 }
-            }
-            catch(Exception ex)
-            {
-                throw ex.InnerException;
-            }
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public static bool KuryeSil(Kurye kurye)
         {
-            using (var context = new KuryeTakipEntityContainer())
+            try
             {
-                var silinecekKurye = context.KuryeSet.SingleOrDefault(k => k.Id == kurye.Id);
+                using (var context = new KuryeTakipEntityContainer())
+                {
+                    var silinecekKurye = context.KuryeSet.SingleOrDefault(k => k.Id == kurye.Id);
 
-                if (silinecekKurye != null)
-                    context.KuryeSet.Remove(silinecekKurye);
+                    if (silinecekKurye != null)
+                        context.KuryeSet.Remove(silinecekKurye);
 
-                context.SaveChanges();
+                    context.SaveChanges();
+                }
+
+                return true;
             }
-
-            return true;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public static List<Kurye> KuryeleriGetir()
         {
             List<Kurye> kayitliKuryeler = new List<Kurye>();
 
-            using (var context = new KuryeTakipEntityContainer())
+            try
             {
-                kayitliKuryeler = context.KuryeSet.ToList();
+                using (var context = new KuryeTakipEntityContainer())
+                {
+                    kayitliKuryeler = context.KuryeSet.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
             return kayitliKuryeler;

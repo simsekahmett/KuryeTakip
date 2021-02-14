@@ -12,18 +12,15 @@ namespace KuryeTakip.DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Kurye
+    public partial class Siparis
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Kurye()
-        {
-            this.Siparis = new HashSet<Siparis>();
-        }
-    
         public int Id { get; set; }
-        public string Isim { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Siparis> Siparis { get; set; }
+        public string HazirlanmaSuresi { get; set; }
+        public string TeslimatSuresi { get; set; }
+        public string KuryeIsim { get; set; }
+        public string OdemeYontem { get; set; }
+        public string RestoranIsim { get; set; }
+        public string BolgeIsim { get; set; }
+        public string Tarih { get; set; }
     }
 }

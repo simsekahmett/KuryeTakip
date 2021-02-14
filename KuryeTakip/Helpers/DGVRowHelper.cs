@@ -10,56 +10,69 @@ namespace KuryeTakip.Helpers
 {
     public static class DGVRowHelper
     {
-        public static void DGVSatirlariOlustur(DataGridView dgv, List<Siparis> siparisler, BindingSource restoranlar, BindingSource kuryeler, BindingSource bolgeler, int count, int lastRowId = 0)
+        public static void DGVSatirlariOlustur(DataGridView dgv, List<Siparis> siparisler, BindingSource restoranlar, BindingSource kuryeler, BindingSource bolgeler, BindingSource odemeYontemleri, int count, int lastRowId = 0)
         {
-            for (int i = 0; i < count; i++)
+           try
             {
-                DataGridViewRow satir = new DataGridViewRow();
-                DataGridViewTextBoxCell siparisNum = new DataGridViewTextBoxCell();
-                DataGridViewComboBoxCell restoranSecme = new DataGridViewComboBoxCell();
-                DataGridViewComboBoxCell kuryeSecme = new DataGridViewComboBoxCell();
-                DataGridViewTextBoxCell siparisDurum = new DataGridViewTextBoxCell();
-                DataGridViewTextBoxCell urunAlinmaSuresi = new DataGridViewTextBoxCell();
-                DataGridViewCheckBoxCell urunTeslimAlindi = new DataGridViewCheckBoxCell();
-                DataGridViewComboBoxCell bolgeSecme = new DataGridViewComboBoxCell();
-                DataGridViewTextBoxCell urunDagitimSuresi = new DataGridViewTextBoxCell();
-                DataGridViewCheckBoxCell urunTeslimEdildi = new DataGridViewCheckBoxCell();
-
-                restoranSecme.DataSource = restoranlar;
-                restoranSecme.DisplayMember = "Isim";
-                restoranSecme.ValueMember = "Id";
-
-                kuryeSecme.DataSource = kuryeler;
-                kuryeSecme.DisplayMember = "Isim";
-                kuryeSecme.ValueMember = "Id";
-
-                bolgeSecme.DataSource = bolgeler;
-                bolgeSecme.DisplayMember = "Isim";
-                bolgeSecme.ValueMember = "Id";
-
-                if (siparisler.Count > 0)
+                for (int i = 0; i < count; i++)
                 {
-                    siparisNum.Value = siparisler.LastOrDefault().Id + (i + 1);
-                }
-                else
-                    siparisNum.Value = i + 1;
+                    DataGridViewRow satir = new DataGridViewRow();
+                    DataGridViewTextBoxCell siparisNum = new DataGridViewTextBoxCell();
+                    DataGridViewComboBoxCell restoranSecme = new DataGridViewComboBoxCell();
+                    DataGridViewComboBoxCell kuryeSecme = new DataGridViewComboBoxCell();
+                    DataGridViewTextBoxCell siparisDurum = new DataGridViewTextBoxCell();
+                    DataGridViewTextBoxCell urunAlinmaSuresi = new DataGridViewTextBoxCell();
+                    DataGridViewCheckBoxCell urunTeslimAlindi = new DataGridViewCheckBoxCell();
+                    DataGridViewComboBoxCell bolgeSecme = new DataGridViewComboBoxCell();
+                    DataGridViewTextBoxCell urunDagitimSuresi = new DataGridViewTextBoxCell();
+                    DataGridViewComboBoxCell odemeYontemiSecme = new DataGridViewComboBoxCell();
+                    DataGridViewCheckBoxCell urunTeslimEdildi = new DataGridViewCheckBoxCell();
 
-                if (lastRowId > 0)
-                {
-                    siparisNum.Value = lastRowId + 1;
-                }
+                    restoranSecme.DataSource = restoranlar;
+                    restoranSecme.DisplayMember = "Isim";
+                    restoranSecme.ValueMember = "Id";
 
-                satir.Cells.Add(siparisNum);
-                satir.Cells.Add(restoranSecme);
-                satir.Cells.Add(kuryeSecme);
-                satir.Cells.Add(siparisDurum);
-                satir.Cells.Add(urunAlinmaSuresi);
-                satir.Cells.Add(urunTeslimAlindi);
-                satir.Cells.Add(bolgeSecme);
-                satir.Cells.Add(urunDagitimSuresi);
-                satir.Cells.Add(urunTeslimEdildi);
-                
-                dgv.Rows.Add(satir);
+                    kuryeSecme.DataSource = kuryeler;
+                    kuryeSecme.DisplayMember = "Isim";
+                    kuryeSecme.ValueMember = "Id";
+
+                    bolgeSecme.DataSource = bolgeler;
+                    bolgeSecme.DisplayMember = "Isim";
+                    bolgeSecme.ValueMember = "Id";
+
+                    odemeYontemiSecme.DataSource = odemeYontemleri;
+                    odemeYontemiSecme.DisplayMember = "YontemIsim";
+                    odemeYontemiSecme.ValueMember = "Id";
+
+                    if (siparisler.Count > 0)
+                    {
+                        siparisNum.Value = siparisler.LastOrDefault().Id + (i + 1);
+                    }
+                    else
+                        siparisNum.Value = i + 1;
+
+                    if (lastRowId > 0)
+                    {
+                        siparisNum.Value = lastRowId + 1;
+                    }
+
+                    satir.Cells.Add(siparisNum);
+                    satir.Cells.Add(restoranSecme);
+                    satir.Cells.Add(kuryeSecme);
+                    satir.Cells.Add(siparisDurum);
+                    satir.Cells.Add(urunAlinmaSuresi);
+                    satir.Cells.Add(urunTeslimAlindi);
+                    satir.Cells.Add(bolgeSecme);
+                    satir.Cells.Add(urunDagitimSuresi);
+                    satir.Cells.Add(odemeYontemiSecme);
+                    satir.Cells.Add(urunTeslimEdildi);
+
+                    dgv.Rows.Add(satir);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }
