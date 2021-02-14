@@ -30,6 +30,7 @@ namespace KuryeTakip
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabKuryeTakip = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -1121,6 +1122,7 @@ namespace KuryeTakip
             this.ClientSize = new System.Drawing.Size(1189, 725);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Kurye Takip v1.0";
             this.Load += new System.EventHandler(this.Form1_Load);

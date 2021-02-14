@@ -14,6 +14,7 @@ namespace KuryeTakip
 {
     public partial class Form1 : Form
     {
+        #region GLOBAL PROPERTYLER
         //log işlerini yapan obje
         Logger logger;
 
@@ -37,7 +38,9 @@ namespace KuryeTakip
         public int oturumdaTamamlananSiparisSayisi = 0;
         public string restorandakiKuryeler = "";
         public string dagitimdakiKuryeler = "";
+        #endregion
 
+        #region FORM1 CONSTRUCTOR & LOAD EVENT
         public Form1()
         {
             InitializeComponent();
@@ -90,10 +93,12 @@ namespace KuryeTakip
             teslimatTimer.Enabled = true;
 
             List<Siparis> tumKayitliSiparisler = siparisleriGetir();
+            kayitliSiparislerSayisi = tumKayitliSiparisler.Count();
 
             //form açılışında datagridview'a boş sipariş satırları oluşturuyor
             DGVRowHelper.DGVSatirlariOlustur(dataGridView1, tumKayitliSiparisler, restoranlarDataSource, kuryelerDataSource, bolgelerDataSource, odemeYontemiDataSource, 5);
         }
+        #endregion
 
         #region DATAGRIDVIEW FONKSİYONLARI
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
