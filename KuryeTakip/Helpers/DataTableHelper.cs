@@ -28,5 +28,15 @@ namespace KuryeTakip.Helpers
 
             return table;
         }
+
+        public static void SetColumnsOrder (this DataTable dataTable, params string[] columnNames)
+        {
+            int columnIndex = 0;
+            foreach (var columnName in columnNames)
+            {
+                dataTable.Columns[columnName].SetOrdinal(columnIndex);
+                columnIndex++;
+            }
+        }
     }
 }

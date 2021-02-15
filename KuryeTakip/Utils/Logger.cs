@@ -60,14 +60,14 @@ namespace KuryeTakip.Utils
         public void SiparisTamamlandiLogEkle(DataAccessLayer.Siparis siparis)
         {
             string mesaj = "### Sipariş Tamamlandı ###";
-            mesaj += " Sipariş Num: " + siparis.Id;
-            mesaj += " Sipariş Tarih: " + siparis.Tarih;
-            mesaj += " Restoran: " + siparis.RestoranIsim;
-            mesaj += " Kurye: " + siparis.KuryeIsim;
-            mesaj += " Bölge: " + siparis.BolgeIsim;
-            mesaj += " Ödeme Yöntemi: " + siparis.OdemeYontem;
-            mesaj += " Ürün Hazırlanma Süresi: " + siparis.HazirlanmaSuresi;
-            mesaj += " Ürün Teslimat Süresi: " + siparis.TeslimatSuresi;
+            mesaj += " [Sipariş Num: " + siparis.Id + "]";
+            mesaj += " [Sipariş Tarih: " + siparis.Tarih + "]";
+            mesaj += " [Restoran: " + siparis.RestoranIsim + "]";
+            mesaj += " [Kurye: " + siparis.KuryeIsim + "]";
+            mesaj += " [Bölge: " + siparis.BolgeIsim + "]";
+            mesaj += " [Ödeme Yöntemi: " + siparis.OdemeYontem + "]";
+            mesaj += " [Ürün Hazırlanma Süresi: " + siparis.HazirlanmaSuresi + "]";
+            mesaj += " [Ürün Teslimat Süresi: " + siparis.TeslimatSuresi + "]";
 
             string formattedLog = logFormatla(mesaj) + Environment.NewLine;
             this.form.logTextBox.Text += formattedLog;

@@ -207,7 +207,7 @@ namespace KuryeTakip
 
                                 Restoran restoran = restoranlarDataSource.List.OfType<Restoran>().Where(k => k.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[1].Value).FirstOrDefault();
                                 Kurye kurye = kuryelerDataSource.List.OfType<Kurye>().Where(k => k.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[6].Value).FirstOrDefault();
-                                Bolge bolge = bolgelerDataSource.List.OfType<Bolge>().Where(b => b.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[3].Value).FirstOrDefault();
+                                Bolge bolge = bolgelerDataSource.List.OfType<Bolge>().Where(b => b.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[2].Value).FirstOrDefault();
                                 OdemeYontemi odemeYontemi = odemeYontemiDataSource.List.OfType<OdemeYontemi>().Where(y => y.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[3].Value).FirstOrDefault();
 
                                 Siparis tamamlananSiparis = new Siparis()
