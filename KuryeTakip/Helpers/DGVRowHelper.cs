@@ -19,13 +19,13 @@ namespace KuryeTakip.Helpers
                     DataGridViewRow satir = new DataGridViewRow();
                     DataGridViewTextBoxCell siparisNum = new DataGridViewTextBoxCell();
                     DataGridViewComboBoxCell restoranSecme = new DataGridViewComboBoxCell();
-                    DataGridViewComboBoxCell kuryeSecme = new DataGridViewComboBoxCell();
+                    DataGridViewComboBoxCell bolgeSecme = new DataGridViewComboBoxCell();
+                    DataGridViewComboBoxCell odemeYontemiSecme = new DataGridViewComboBoxCell();
                     DataGridViewTextBoxCell siparisDurum = new DataGridViewTextBoxCell();
                     DataGridViewTextBoxCell urunAlinmaSuresi = new DataGridViewTextBoxCell();
+                    DataGridViewComboBoxCell kuryeSecme = new DataGridViewComboBoxCell();
                     DataGridViewCheckBoxCell urunTeslimAlindi = new DataGridViewCheckBoxCell();
-                    DataGridViewComboBoxCell bolgeSecme = new DataGridViewComboBoxCell();
                     DataGridViewTextBoxCell urunDagitimSuresi = new DataGridViewTextBoxCell();
-                    DataGridViewComboBoxCell odemeYontemiSecme = new DataGridViewComboBoxCell();
                     DataGridViewCheckBoxCell urunTeslimEdildi = new DataGridViewCheckBoxCell();
 
                     restoranSecme.DataSource = restoranlar;
@@ -44,6 +44,7 @@ namespace KuryeTakip.Helpers
                     odemeYontemiSecme.DisplayMember = "YontemIsim";
                     odemeYontemiSecme.ValueMember = "Id";
 
+                    //eklenecek satırın sipariş numarasının değerinin hesaplanması
                     if (siparisler.Count > 0)
                     {
                         siparisNum.Value = siparisler.LastOrDefault().Id + (i + 1);
@@ -56,15 +57,16 @@ namespace KuryeTakip.Helpers
                         siparisNum.Value = lastRowId + 1;
                     }
 
+                    //eklenecek satırın sütunları sıralı olarak eklenmeli
                     satir.Cells.Add(siparisNum);
                     satir.Cells.Add(restoranSecme);
-                    satir.Cells.Add(kuryeSecme);
+                    satir.Cells.Add(bolgeSecme);
+                    satir.Cells.Add(odemeYontemiSecme);
                     satir.Cells.Add(siparisDurum);
                     satir.Cells.Add(urunAlinmaSuresi);
+                    satir.Cells.Add(kuryeSecme);
                     satir.Cells.Add(urunTeslimAlindi);
-                    satir.Cells.Add(bolgeSecme);
                     satir.Cells.Add(urunDagitimSuresi);
-                    satir.Cells.Add(odemeYontemiSecme);
                     satir.Cells.Add(urunTeslimEdildi);
 
                     dgv.Rows.Add(satir);

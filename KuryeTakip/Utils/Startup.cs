@@ -15,14 +15,27 @@ namespace KuryeTakip.Utils
             {
                 using(var context = new KuryeTakipEntityContainer())
                 {
-                    if(!context.Database.Exists())
-                    {
-                        DBInitializer initializer = new DBInitializer();
-                        initializer.InitializeDatabase(context);
-                    }
+                    DBInitializer initializer = new DBInitializer();
+                    initializer.InitializeDatabase(context);
+                   
                 }
 
                 return true;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool DBVarMi()
+        {
+            try
+            {
+                using (var context = new KuryeTakipEntityContainer())
+                {
+                    return context.Database.Exists();
+                }
             }
             catch(Exception ex)
             {

@@ -15,22 +15,22 @@ namespace KuryeTakip.DataAccessLayer
             {
                 Kurye kurye = new Kurye()
                 {
-                    Isim = "Ahmet Şimşek"
+                    Isim = "Dummy Kurye"
                 };
 
                 Restoran restoran = new Restoran()
                 {
-                    Isim = "ABSDev Cafe"
+                    Isim = "Dummy Restoran"
                 };
 
                 Bolge bolge = new Bolge()
                 {
-                    Isim = "A Bölgesi"
+                    Isim = "Dummy Bölge"
                 };
 
                 OdemeYontemi odemeYontemi = new OdemeYontemi()
                 {
-                    YontemIsim = "Nakit"
+                    YontemIsim = "Dummy Ödeme"
                 };
 
                 context.KuryeSet.Add(kurye);

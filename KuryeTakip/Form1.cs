@@ -36,7 +36,6 @@ namespace KuryeTakip
         public int aktifTeslimatTimerSayisi = 0;
         public int kayitliSiparislerSayisi = 0;
         public int oturumdaTamamlananSiparisSayisi = 0;
-        public string restorandakiKuryeler = "";
         public string dagitimdakiKuryeler = "";
         #endregion
 
@@ -45,34 +44,65 @@ namespace KuryeTakip
         {
             InitializeComponent();
 
+            //anlık bilgi kısmı  labellar
             label15.Text = "";
             label16.Text = "";
             label17.Text = "";
             label18.Text = "";
             label19.Text = "";
-            label20.Text = "";
             label21.Text = "";
 
-            //kurye isimlerinin labellarına word-wrap özelliği için
-            label20.MaximumSize = new Size(250, 0);
-            label20.AutoSize = true;
-            label21.MaximumSize = new Size(250, 0);
+            //kurye isimlerinin labellarına word-wrap özelliği
+            label21.MaximumSize = new Size(350, 0);
             label21.AutoSize = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //eğer database yoksa kuracak
-            Startup.DBKur();
-
             logger = new Logger(this);
             logger.LogEkle("KuryeTakip programı başlatıldı");
 
+            bool dbVar = false;
+
+            //database var mı yok mu kontrol
+            try
+            {
+                dbVar = Startup.DBVarMi();
+            }
+            catch(Exception ex)
+            {
+                logger.HataLogEkle("Database var mı yok mu kontrolü yapılamadı: " + ex);
+            }
+
+            //database yoksa kur
+            try
+            {
+                if(!dbVar)
+                {
+                    Startup.DBKur();
+                    dbVar = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                logger.HataLogEkle("Database kurulumu yapılamadı: " + ex);
+            }
+
             //veritabanından kurye, restoran, bölgeler ve ödeme yöntemleri bilgileri getiriliyor
-            kuryeleriGetir();
-            restoranlariGetir();
-            bolgeleriGetir();
-            odemeYontemleriGetir();
+            try
+            {
+               if(dbVar)
+                {
+                    kuryeleriGetir();
+                    restoranlariGetir();
+                    bolgeleriGetir();
+                    odemeYontemleriGetir();
+                }
+            }
+            catch(Exception ex)
+            {
+                logger.HataLogEkle("Database veri çekim işlemi yapılamadı: " + ex);
+            }
 
             //ürün teslimat stopwatch'larının ekranda değerini gösterecek timer
             var teslimatTimer = new System.Timers.Timer();
@@ -133,24 +163,33 @@ namespace KuryeTakip
         {
             try
             {
-
                 var dataGrid = (DataGridView)sender;
                 if (e.RowIndex >= 0)
                 {
-                    var row = dataGrid.Rows[e.RowIndex];
-                    seciliRow = row;
-
+                    seciliRow = dataGrid.Rows[e.RowIndex];
 
                     if (e.RowIndex != -1)
                     {
-                        var teslimatStopwatch = teslimatTimerlar[dataGrid.Rows[e.RowIndex]];
+                        //ürün teslim alındı checkbox
+                        if (e.ColumnIndex == 7)
+                        {
+                            if ((bool)seciliRow.Cells[7].Value)
+                            {
+                                var urunStopwatch = urunTimerlar[dataGridView1.Rows[e.RowIndex]];
+                                var teslimStopWatch = teslimatTimerlar[dataGridView1.Rows[e.RowIndex]];
+
+                                urunStopwatch.Stop();
+                                teslimStopWatch.Start();
+                                dataGridView1.Rows[e.RowIndex].Cells[4].Value = Models.SiparisDurumu.Yolda.Durum;
+                            }
+                        }
 
                         //urun teslim edildi checkbox
                         if (e.ColumnIndex == 9)
                         {
-                            if ((bool)row.Cells[9].Value)
+                            //checkbox checked
+                            if ((bool)seciliRow.Cells[9].Value)
                             {
-
                                 if (dataGridView1.Rows[e.RowIndex].Cells[8].Value == null)
                                 {
                                     dataGridView1[9, e.RowIndex].Value = false;
@@ -164,12 +203,12 @@ namespace KuryeTakip
                                 var teslimStopwatch = teslimatTimerlar[dataGrid.Rows[e.RowIndex]];
                                 teslimStopwatch.Stop();
 
-                                dataGridView1.Rows[e.RowIndex].Cells[3].Value = Models.SiparisDurumu.Tamamlandi.Durum;
+                                dataGridView1.Rows[e.RowIndex].Cells[4].Value = Models.SiparisDurumu.Tamamlandi.Durum;
 
                                 Restoran restoran = restoranlarDataSource.List.OfType<Restoran>().Where(k => k.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[1].Value).FirstOrDefault();
-                                Kurye kurye = kuryelerDataSource.List.OfType<Kurye>().Where(k => k.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[2].Value).FirstOrDefault();
-                                Bolge bolge = bolgelerDataSource.List.OfType<Bolge>().Where(b => b.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[6].Value).FirstOrDefault();
-                                OdemeYontemi odemeYontemi = odemeYontemiDataSource.List.OfType<OdemeYontemi>().Where(y => y.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[8].Value).FirstOrDefault();
+                                Kurye kurye = kuryelerDataSource.List.OfType<Kurye>().Where(k => k.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[6].Value).FirstOrDefault();
+                                Bolge bolge = bolgelerDataSource.List.OfType<Bolge>().Where(b => b.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[3].Value).FirstOrDefault();
+                                OdemeYontemi odemeYontemi = odemeYontemiDataSource.List.OfType<OdemeYontemi>().Where(y => y.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[3].Value).FirstOrDefault();
 
                                 Siparis tamamlananSiparis = new Siparis()
                                 {
@@ -177,8 +216,8 @@ namespace KuryeTakip
                                     RestoranIsim = restoran.Isim,
                                     OdemeYontem = odemeYontemi.YontemIsim,
                                     BolgeIsim = bolge.Isim,
-                                    HazirlanmaSuresi = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString(),
-                                    TeslimatSuresi = dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString(),
+                                    HazirlanmaSuresi = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString(),
+                                    TeslimatSuresi = dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString(),
                                     Tarih = DateTime.Now.ToString()
                                 };
 
@@ -189,10 +228,7 @@ namespace KuryeTakip
                                 kayitliSiparislerSayisi++;
                                 oturumdaTamamlananSiparisSayisi++;
 
-                                TelegramHelper.SiparisMesajiGonder(tamamlananSiparis, "243737864");
-                                //TelegramHelper.SiparisMesajiGonder(tamamlananSiparis, "1055379322");
-
-                                dataGridView1.Rows.Remove(row);
+                                dataGridView1.Rows.Remove(seciliRow);
                                 DGVRowHelper.DGVSatirlariOlustur(dataGridView1, siparisleriGetir(), restoranlarDataSource, kuryelerDataSource, bolgelerDataSource, odemeYontemiDataSource, 1, (int)dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[0].Value);
                             }
                         }
@@ -209,22 +245,12 @@ namespace KuryeTakip
         {
             if (e.RowIndex != -1)
             {
-                var urunStopwatch = urunTimerlar[dataGridView1.Rows[e.RowIndex]];
-                var teslimStopWatch = teslimatTimerlar[dataGridView1.Rows[e.RowIndex]];
-
-                //kurye seçildi
-                if (e.ColumnIndex == 2 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                //ödeme yöntemi seçildi
+                if (e.ColumnIndex == 3 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
+                    var urunStopwatch = urunTimerlar[dataGridView1.Rows[e.RowIndex]];
                     urunStopwatch.Start();
-                    dataGridView1.Rows[e.RowIndex].Cells[3].Value = Models.SiparisDurumu.Aliniyor.Durum;
-                }
-
-                //bölge seçildi
-                if (e.ColumnIndex == 6 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-                {
-                    urunStopwatch.Stop();
-                    teslimStopWatch.Start();
-                    dataGridView1.Rows[e.RowIndex].Cells[3].Value = Models.SiparisDurumu.Yolda.Durum;
+                    dataGridView1.Rows[e.RowIndex].Cells[4].Value = Models.SiparisDurumu.Aliniyor.Durum;
                 }
             }
         }
@@ -483,15 +509,13 @@ namespace KuryeTakip
             try
             {
                 aktifUrunTimerSayisi = 0;
-                restorandakiKuryeler = "";
 
                 foreach (var timer in urunTimerlar)
                 {
                     if (timer.Value.IsRunning)
                     {
-                        timer.Key.Cells[4].Value = timer.Value.Elapsed.ToString("hh\\:mm\\:ss");
+                        timer.Key.Cells[5].Value = timer.Value.Elapsed.ToString("hh\\:mm\\:ss");
                         aktifUrunTimerSayisi++;
-                        restorandakiKuryeler += timer.Key.Cells[2].FormattedValue + ", ";
                     }
                 }
             }
@@ -511,9 +535,9 @@ namespace KuryeTakip
                 {
                     if (timer.Value.IsRunning)
                     {
-                        timer.Key.Cells[7].Value = timer.Value.Elapsed.ToString("hh\\:mm\\:ss");
+                        timer.Key.Cells[8].Value = timer.Value.Elapsed.ToString("hh\\:mm\\:ss");
                         aktifTeslimatTimerSayisi++;
-                        dagitimdakiKuryeler += timer.Key.Cells[2].FormattedValue + ", ";
+                        dagitimdakiKuryeler += timer.Key.Cells[6].FormattedValue + ", ";
                     }
                 }
             }
@@ -530,7 +554,6 @@ namespace KuryeTakip
             label17.Text = "Teslimat aşamasındaki sipariş sayısı: " + aktifTeslimatTimerSayisi;
             label18.Text = "Oturumda tamamlanan sipariş sayısı: " + oturumdaTamamlananSiparisSayisi;
             label19.Text = "Toplam tamamlanan sipariş sayısı: " + kayitliSiparislerSayisi;
-            label20.Text = "Restoranda olan kuryeler: " + Environment.NewLine + restorandakiKuryeler;
             label21.Text = "Dağıtımda olan kuryeler: " + Environment.NewLine + dagitimdakiKuryeler;
         }
         #endregion

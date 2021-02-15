@@ -34,16 +34,6 @@ namespace KuryeTakip
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabKuryeTakip = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.siparisNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.restoran = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.kurye = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.durum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.urunSure = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.kuryeYolda = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.bolge = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.dagitimSuresi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OdemeYontemi = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.teslimEdildi = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabRaporlama = new System.Windows.Forms.TabPage();
             this.groupBox15 = new System.Windows.Forms.GroupBox();
             this.bitisTarihDateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -119,7 +109,6 @@ namespace KuryeTakip
             this.logTextBox = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -128,6 +117,16 @@ namespace KuryeTakip
             this.kuryeTakipMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemEkle = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCikar = new System.Windows.Forms.ToolStripMenuItem();
+            this.siparisNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.restoran = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.bolge = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.OdemeYontemi = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.durum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.urunSure = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kurye = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.kuryeYolda = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dagitimSuresi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.teslimEdildi = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabKuryeTakip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -188,13 +187,13 @@ namespace KuryeTakip
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.siparisNo,
             this.restoran,
-            this.kurye,
+            this.bolge,
+            this.OdemeYontemi,
             this.durum,
             this.urunSure,
+            this.kurye,
             this.kuryeYolda,
-            this.bolge,
             this.dagitimSuresi,
-            this.OdemeYontemi,
             this.teslimEdildi});
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView1.Location = new System.Drawing.Point(6, 6);
@@ -213,74 +212,6 @@ namespace KuryeTakip
             this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
             this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
             this.dataGridView1.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dataGridView1_RowsAdded);
-            // 
-            // siparisNo
-            // 
-            this.siparisNo.FillWeight = 160F;
-            this.siparisNo.HeaderText = "Sipariş No";
-            this.siparisNo.Name = "siparisNo";
-            this.siparisNo.ReadOnly = true;
-            this.siparisNo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // restoran
-            // 
-            this.restoran.FillWeight = 460F;
-            this.restoran.HeaderText = "Restoran";
-            this.restoran.Name = "restoran";
-            // 
-            // kurye
-            // 
-            this.kurye.FillWeight = 460F;
-            this.kurye.HeaderText = "Kurye";
-            this.kurye.Name = "kurye";
-            // 
-            // durum
-            // 
-            this.durum.FillWeight = 460F;
-            this.durum.HeaderText = "Durum";
-            this.durum.Name = "durum";
-            this.durum.ReadOnly = true;
-            this.durum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // urunSure
-            // 
-            this.urunSure.FillWeight = 460F;
-            this.urunSure.HeaderText = "Ürün Alınma Süresi";
-            this.urunSure.Name = "urunSure";
-            this.urunSure.ReadOnly = true;
-            this.urunSure.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // kuryeYolda
-            // 
-            this.kuryeYolda.FillWeight = 460F;
-            this.kuryeYolda.HeaderText = "Ürün Teslim Alındı";
-            this.kuryeYolda.Name = "kuryeYolda";
-            // 
-            // bolge
-            // 
-            this.bolge.FillWeight = 460F;
-            this.bolge.HeaderText = "Dağıtım Bölgesi";
-            this.bolge.Name = "bolge";
-            // 
-            // dagitimSuresi
-            // 
-            this.dagitimSuresi.FillWeight = 460F;
-            this.dagitimSuresi.HeaderText = "Urun Dağıtım Süresi";
-            this.dagitimSuresi.Name = "dagitimSuresi";
-            this.dagitimSuresi.ReadOnly = true;
-            this.dagitimSuresi.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // OdemeYontemi
-            // 
-            this.OdemeYontemi.FillWeight = 460F;
-            this.OdemeYontemi.HeaderText = "Ödeme Yöntemi";
-            this.OdemeYontemi.Name = "OdemeYontemi";
-            // 
-            // teslimEdildi
-            // 
-            this.teslimEdildi.FillWeight = 460F;
-            this.teslimEdildi.HeaderText = "Teslim Edildi";
-            this.teslimEdildi.Name = "teslimEdildi";
             // 
             // tabRaporlama
             // 
@@ -1009,7 +940,6 @@ namespace KuryeTakip
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label21);
-            this.groupBox1.Controls.Add(this.label20);
             this.groupBox1.Controls.Add(this.label19);
             this.groupBox1.Controls.Add(this.label18);
             this.groupBox1.Controls.Add(this.label17);
@@ -1025,21 +955,11 @@ namespace KuryeTakip
             // 
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(813, 12);
+            this.label21.Location = new System.Drawing.Point(508, 12);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(67, 20);
             this.label21.TabIndex = 6;
             this.label21.Text = "label21";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(467, 12);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(67, 20);
-            this.label20.TabIndex = 5;
-            this.label20.Text = "label20";
             // 
             // label19
             // 
@@ -1114,6 +1034,74 @@ namespace KuryeTakip
             this.menuItemCikar.Size = new System.Drawing.Size(101, 22);
             this.menuItemCikar.Text = "Çıkar";
             this.menuItemCikar.Click += new System.EventHandler(this.menuItemCikar_Click);
+            // 
+            // siparisNo
+            // 
+            this.siparisNo.FillWeight = 160F;
+            this.siparisNo.HeaderText = "Sipariş No";
+            this.siparisNo.Name = "siparisNo";
+            this.siparisNo.ReadOnly = true;
+            this.siparisNo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // restoran
+            // 
+            this.restoran.FillWeight = 460F;
+            this.restoran.HeaderText = "Restoran";
+            this.restoran.Name = "restoran";
+            // 
+            // bolge
+            // 
+            this.bolge.FillWeight = 460F;
+            this.bolge.HeaderText = "Dağıtım Bölgesi";
+            this.bolge.Name = "bolge";
+            // 
+            // OdemeYontemi
+            // 
+            this.OdemeYontemi.FillWeight = 460F;
+            this.OdemeYontemi.HeaderText = "Ödeme Yöntemi";
+            this.OdemeYontemi.Name = "OdemeYontemi";
+            // 
+            // durum
+            // 
+            this.durum.FillWeight = 460F;
+            this.durum.HeaderText = "Durum";
+            this.durum.Name = "durum";
+            this.durum.ReadOnly = true;
+            this.durum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // urunSure
+            // 
+            this.urunSure.FillWeight = 460F;
+            this.urunSure.HeaderText = "Ürün Alınma Süresi";
+            this.urunSure.Name = "urunSure";
+            this.urunSure.ReadOnly = true;
+            this.urunSure.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // kurye
+            // 
+            this.kurye.FillWeight = 460F;
+            this.kurye.HeaderText = "Kurye";
+            this.kurye.Name = "kurye";
+            // 
+            // kuryeYolda
+            // 
+            this.kuryeYolda.FillWeight = 460F;
+            this.kuryeYolda.HeaderText = "Ürün Teslim Alındı";
+            this.kuryeYolda.Name = "kuryeYolda";
+            // 
+            // dagitimSuresi
+            // 
+            this.dagitimSuresi.FillWeight = 460F;
+            this.dagitimSuresi.HeaderText = "Urun Dağıtım Süresi";
+            this.dagitimSuresi.Name = "dagitimSuresi";
+            this.dagitimSuresi.ReadOnly = true;
+            this.dagitimSuresi.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // teslimEdildi
+            // 
+            this.teslimEdildi.FillWeight = 460F;
+            this.teslimEdildi.HeaderText = "Teslim Edildi";
+            this.teslimEdildi.Name = "teslimEdildi";
             // 
             // Form1
             // 
@@ -1218,16 +1206,6 @@ namespace KuryeTakip
         private System.Windows.Forms.Button odemeYontemiKaydetButton;
         private System.Windows.Forms.TextBox odemeYontemiKayitTextBox;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn siparisNo;
-        private System.Windows.Forms.DataGridViewComboBoxColumn restoran;
-        private System.Windows.Forms.DataGridViewComboBoxColumn kurye;
-        private System.Windows.Forms.DataGridViewTextBoxColumn durum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn urunSure;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn kuryeYolda;
-        private System.Windows.Forms.DataGridViewComboBoxColumn bolge;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dagitimSuresi;
-        private System.Windows.Forms.DataGridViewComboBoxColumn OdemeYontemi;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn teslimEdildi;
         private System.Windows.Forms.GroupBox groupBox14;
         private System.Windows.Forms.Button tumSiparisleriGetirButton;
         private System.Windows.Forms.GroupBox groupBox13;
@@ -1264,8 +1242,17 @@ namespace KuryeTakip
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.DataGridViewTextBoxColumn siparisNo;
+        private System.Windows.Forms.DataGridViewComboBoxColumn restoran;
+        private System.Windows.Forms.DataGridViewComboBoxColumn bolge;
+        private System.Windows.Forms.DataGridViewComboBoxColumn OdemeYontemi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn durum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn urunSure;
+        private System.Windows.Forms.DataGridViewComboBoxColumn kurye;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn kuryeYolda;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dagitimSuresi;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn teslimEdildi;
     }
 }
 
