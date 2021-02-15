@@ -340,6 +340,7 @@ namespace KuryeTakip
 
         private void restoranlariGetirButton_Click(object sender, EventArgs e)
         {
+            logger.LogEkle("RestoranGetir butonu tıklandı");
 
             restoranlariGetir();
 
@@ -558,7 +559,7 @@ namespace KuryeTakip
         }
         #endregion
 
-        #region RAPORLAMA TAB
+        #region TAB CONTROL FONKSİYONLARI
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedTab == tabControl1.TabPages["tabRaporlama"])
@@ -578,10 +579,30 @@ namespace KuryeTakip
                 odemeRaporlamaComboBox.DataSource = odemeYontemiDataSource;
                 odemeRaporlamaComboBox.DisplayMember = "YontemIsim";
                 odemeRaporlamaComboBox.ValueMember = "Id";
+            }
 
+            if(tabControl1.SelectedTab == tabControl1.TabPages["tabKayit"])
+            {
+                kuryelerComboBox.DataSource = kuryelerDataSource;
+                kuryelerComboBox.DisplayMember = "Isim";
+                kuryelerComboBox.ValueMember = "Id";
+
+                restoranlarComboBox.DataSource = restoranlarDataSource;
+                restoranlarComboBox.DisplayMember = "Isim";
+                restoranlarComboBox.ValueMember = "Id";
+
+                bolgelerComboBox.DataSource = bolgelerDataSource;
+                bolgelerComboBox.DisplayMember = "Isim";
+                bolgelerComboBox.ValueMember = "Id";
+
+                odemeYontemiComboBox.DataSource = odemeYontemiDataSource;
+                odemeYontemiComboBox.DisplayMember = "YontemIsim";
+                odemeYontemiComboBox.ValueMember = "Id";
             }
         }
+#endregion
 
+        #region RAPORLAMA TAB
         private void kuryeTumSiparisleriGetirButton_Click(object sender, EventArgs e)
         {
             try
