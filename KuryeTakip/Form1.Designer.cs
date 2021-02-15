@@ -704,7 +704,7 @@ namespace KuryeTakip
             this.odemeYontemiKaydetButton.Name = "odemeYontemiKaydetButton";
             this.odemeYontemiKaydetButton.Size = new System.Drawing.Size(137, 23);
             this.odemeYontemiKaydetButton.TabIndex = 2;
-            this.odemeYontemiKaydetButton.Text = "Bölge Kaydet";
+            this.odemeYontemiKaydetButton.Text = "Ödeme Yöntemi Kaydet";
             this.odemeYontemiKaydetButton.UseVisualStyleBackColor = true;
             this.odemeYontemiKaydetButton.Click += new System.EventHandler(this.odemeYontemiKaydetButton_Click);
             // 
