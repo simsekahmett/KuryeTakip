@@ -69,7 +69,7 @@ namespace KuryeTakip
             {
                 dbVar = Startup.DBVarMi();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.HataLogEkle("Database var mı yok mu kontrolü yapılamadı: " + ex);
             }
@@ -77,13 +77,13 @@ namespace KuryeTakip
             //database yoksa kur
             try
             {
-                if(!dbVar)
+                if (!dbVar)
                 {
                     Startup.DBKur();
                     dbVar = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.HataLogEkle("Database kurulumu yapılamadı: " + ex);
             }
@@ -91,7 +91,7 @@ namespace KuryeTakip
             //veritabanından kurye, restoran, bölgeler ve ödeme yöntemleri bilgileri getiriliyor
             try
             {
-               if(dbVar)
+                if (dbVar)
                 {
                     kuryeleriGetir();
                     restoranlariGetir();
@@ -99,7 +99,7 @@ namespace KuryeTakip
                     odemeYontemleriGetir();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.HataLogEkle("Database veri çekim işlemi yapılamadı: " + ex);
             }
@@ -584,94 +584,180 @@ namespace KuryeTakip
 
         private void kuryeTumSiparisleriGetirButton_Click(object sender, EventArgs e)
         {
-            List<Siparis> kuryeTumSiparisler = siparisleriGetir().Where(s => s.KuryeIsim == kuryeRaporlamaComboBox.Text).ToList();
+            try
+            {
+                logger.RaporLogEkle("Kurye raporlaması için tüm siparişler çekiliyor");
+                List<Siparis> kuryeTumSiparisler = siparisleriGetir().Where(s => s.KuryeIsim == kuryeRaporlamaComboBox.Text).ToList();
 
-            raporTabDataGridView.DataSource = kuryeTumSiparisler.ToDataTable();
+                logger.RaporLogEkle(kuryeRaporlamaComboBox.Text + " kurye için tüm siparişler çekildi");
 
-            kuryeRaporlamaTextBox.Text = "Kayıtlı kurye sayısı: " + kuryelerDataSource.Count + Environment.NewLine;
-            kuryeRaporlamaTextBox.Text += kuryeRaporlamaComboBox.Text + " sipariş sayısı: " + kuryeTumSiparisler.Count + Environment.NewLine;
-            kuryeRaporlamaTextBox.Text += kuryeRaporlamaComboBox.Text + " ortalama teslimat süresi: " + ortalamaSureHesaplama(kuryeTumSiparisler, "teslimat");
+                raporTabDataGridView.DataSource = kuryeTumSiparisler.ToDataTable();
+
+                kuryeRaporlamaTextBox.Text = "Kayıtlı kurye sayısı: " + kuryelerDataSource.Count + Environment.NewLine;
+                kuryeRaporlamaTextBox.Text += kuryeRaporlamaComboBox.Text + " sipariş sayısı: " + kuryeTumSiparisler.Count + Environment.NewLine;
+                kuryeRaporlamaTextBox.Text += kuryeRaporlamaComboBox.Text + " ortalama teslimat süresi: " + ortalamaSureHesaplama(kuryeTumSiparisler, "teslimat");
+
+                logger.RaporLogEkle(kuryeRaporlamaComboBox.Text + " kurye için raporlama hazırlandı, ekrana verildi");
+            }
+            catch (Exception ex)
+            {
+                logger.RaporHataLogEkle("Kurye raporlamasında hata: " + ex.Message);
+            }
         }
 
         private void restoranTumSiparisleriGetirButton_Click(object sender, EventArgs e)
         {
-            List<Siparis> restoranTumSiparisler = siparisleriGetir().Where(s => s.RestoranIsim == restoranRaporlamaComboBox.Text).ToList();
+            try
+            {
+                logger.RaporLogEkle("Restoran raporlaması için tüm siparişler çekiliyor");
 
-            raporTabDataGridView.DataSource = restoranTumSiparisler.ToDataTable();
+                List<Siparis> restoranTumSiparisler = siparisleriGetir().Where(s => s.RestoranIsim == restoranRaporlamaComboBox.Text).ToList();
 
-            restoranRaporlamaTextBox.Text = "Kayıtlı restoran sayısı: " + restoranlarDataSource.Count + Environment.NewLine;
-            restoranRaporlamaTextBox.Text += restoranRaporlamaComboBox.Text + " toplam sipariş sayısı: " + restoranTumSiparisler.Count + Environment.NewLine;
-            restoranRaporlamaTextBox.Text += restoranRaporlamaComboBox.Text + " ortalama hazırlama süresi: " + ortalamaSureHesaplama(restoranTumSiparisler, "hazırlama");
+                logger.RaporLogEkle(restoranRaporlamaComboBox.Text + " restoran için tüm siparişler çekildi");
+
+                raporTabDataGridView.DataSource = restoranTumSiparisler.ToDataTable();
+
+                restoranRaporlamaTextBox.Text = "Kayıtlı restoran sayısı: " + restoranlarDataSource.Count + Environment.NewLine;
+                restoranRaporlamaTextBox.Text += restoranRaporlamaComboBox.Text + " toplam sipariş sayısı: " + restoranTumSiparisler.Count + Environment.NewLine;
+                restoranRaporlamaTextBox.Text += restoranRaporlamaComboBox.Text + " ortalama hazırlama süresi: " + ortalamaSureHesaplama(restoranTumSiparisler, "hazırlama");
+
+                logger.RaporLogEkle(restoranRaporlamaComboBox.Text + " restoran için raporlama hazırlandı, ekrana verildi");
+            }
+            catch (Exception ex)
+            {
+                logger.RaporHataLogEkle("Restoran raporlamasında hata: " + ex.Message);
+            }
         }
 
         private void bolgeTumSiparisleriGetirButton_Click(object sender, EventArgs e)
         {
-            List<Siparis> bolgeTumSiparisler = siparisleriGetir().Where(s => s.BolgeIsim == bolgeRaporlamaComboBox.Text).ToList();
+            try
+            {
+                logger.RaporLogEkle("Bölge raporlaması için tüm siparişler çekiliyor");
 
-            raporTabDataGridView.DataSource = bolgeTumSiparisler.ToDataTable();
+                List<Siparis> bolgeTumSiparisler = siparisleriGetir().Where(s => s.BolgeIsim == bolgeRaporlamaComboBox.Text).ToList();
 
-            bolgeRaporlamaTextBox.Text = "Kayıtlı bölge sayısı: " + bolgeTumSiparisler.Count + Environment.NewLine;
-            bolgeRaporlamaTextBox.Text += bolgeRaporlamaComboBox.Text + " toplam sipariş sayısı: " + bolgeTumSiparisler.Count + Environment.NewLine;
-            bolgeRaporlamaTextBox.Text += bolgeRaporlamaComboBox.Text + " ortalama hazırlama süresi: " + ortalamaSureHesaplama(bolgeTumSiparisler, "hazırlama");
-            bolgeRaporlamaTextBox.Text += Environment.NewLine;
-            bolgeRaporlamaTextBox.Text += bolgeRaporlamaComboBox.Text + " ortalama teslimat süresi: " + ortalamaSureHesaplama(bolgeTumSiparisler, "teslimat");
+                logger.RaporLogEkle(bolgeRaporlamaComboBox.Text + " bölgesi için tüm siparişler çekildi");
+
+                raporTabDataGridView.DataSource = bolgeTumSiparisler.ToDataTable();
+
+                bolgeRaporlamaTextBox.Text = "Kayıtlı bölge sayısı: " + bolgeTumSiparisler.Count + Environment.NewLine;
+                bolgeRaporlamaTextBox.Text += bolgeRaporlamaComboBox.Text + " toplam sipariş sayısı: " + bolgeTumSiparisler.Count + Environment.NewLine;
+                bolgeRaporlamaTextBox.Text += bolgeRaporlamaComboBox.Text + " ortalama hazırlama süresi: " + ortalamaSureHesaplama(bolgeTumSiparisler, "hazırlama");
+                bolgeRaporlamaTextBox.Text += Environment.NewLine;
+                bolgeRaporlamaTextBox.Text += bolgeRaporlamaComboBox.Text + " ortalama teslimat süresi: " + ortalamaSureHesaplama(bolgeTumSiparisler, "teslimat");
+
+                logger.RaporLogEkle(bolgeRaporlamaComboBox.Text + " bölge için raporlama hazırlandı, ekrana verildi");
+            }
+            catch (Exception ex)
+            {
+                logger.RaporHataLogEkle("Bölge raporlamasında hata: " + ex.Message);
+            }
         }
 
         private void odemeTumSiparisleriGetirButton_Click(object sender, EventArgs e)
         {
-            List<Siparis> odemeTumSiparisler = siparisleriGetir().Where(s => s.OdemeYontem == odemeRaporlamaComboBox.Text).ToList();
+           try
+            {
+                logger.RaporLogEkle("Ödeme Yöntemi raporlaması için tüm siparişler çekiliyor");
 
-            raporTabDataGridView.DataSource = odemeTumSiparisler.ToDataTable();
+                List<Siparis> odemeTumSiparisler = siparisleriGetir().Where(s => s.OdemeYontem == odemeRaporlamaComboBox.Text).ToList();
 
-            odemeRaporlamaTextBox.Text = "Kayıtlı ödeme yöntemi sayısı: " + odemeTumSiparisler.Count + Environment.NewLine;
-            odemeRaporlamaTextBox.Text += odemeRaporlamaComboBox.Text + " ile ödenen toplam sipariş sayısı: " + odemeTumSiparisler.Count;
+                logger.RaporLogEkle(odemeRaporlamaComboBox.Text + " ödeme yöntemi için tüm siparişler çekildi");
+
+                raporTabDataGridView.DataSource = odemeTumSiparisler.ToDataTable();
+
+                odemeRaporlamaTextBox.Text = "Kayıtlı ödeme yöntemi sayısı: " + odemeTumSiparisler.Count + Environment.NewLine;
+                odemeRaporlamaTextBox.Text += odemeRaporlamaComboBox.Text + " ile ödenen toplam sipariş sayısı: " + odemeTumSiparisler.Count;
+
+                logger.RaporLogEkle(odemeRaporlamaComboBox.Text + " ödeme yöntemi için raporlama hazırlandı, ekrana verildi");
+            }
+            catch (Exception ex)
+            {
+                logger.RaporHataLogEkle("Ödeme Yöntemi raporlamasında hata: " + ex.Message);
+            }
         }
 
         private void tarihTumSiparisleriGetirButton_Click(object sender, EventArgs e)
         {
-            List<Siparis> tarihAraligindakiSiparisler = siparisleriGetir().Where(s => DateTime.Parse(s.Tarih) >= DateTime.Parse(baslangicTarihDateTimePicker.Value.ToShortDateString()) &&
+            try
+            {
+                logger.RaporLogEkle("Tarih aralığı raporlaması için tüm siparişler çekiliyor");
+
+                List<Siparis> tarihAraligindakiSiparisler = siparisleriGetir().Where(s => DateTime.Parse(s.Tarih) >= DateTime.Parse(baslangicTarihDateTimePicker.Value.ToShortDateString()) &&
                                                                                       DateTime.Parse(s.Tarih) <= bitisTarihDateTimePicker.Value).ToList();
 
-            raporTabDataGridView.DataSource = tarihAraligindakiSiparisler.ToDataTable();
+                logger.RaporLogEkle(baslangicTarihDateTimePicker.Value.ToShortDateString() + " ile " + bitisTarihDateTimePicker.Value + " aralığındaki için tüm siparişler çekildi");
 
-            tarihRaporlamaTextBox.Text = baslangicTarihDateTimePicker.Value.ToShortDateString() + " ile " + bitisTarihDateTimePicker.Value + " tarihleri arasındaki siparişler listelendi" + Environment.NewLine;
-            if (tarihAraligindakiSiparisler.Count > 0)
-                tarihRaporlamaTextBox.Text += tarihAraligindakiSiparisler.Count + " adet sipariş bulundu";
-            else
-                tarihRaporlamaTextBox.Text += "Girilen tarih aralığında hiç sipariş bulunamadı";
+                raporTabDataGridView.DataSource = tarihAraligindakiSiparisler.ToDataTable();
 
+                tarihRaporlamaTextBox.Text = baslangicTarihDateTimePicker.Value.ToShortDateString() + " ile " + bitisTarihDateTimePicker.Value + " tarihleri arasındaki siparişler listelendi" + Environment.NewLine;
+                if (tarihAraligindakiSiparisler.Count > 0)
+                    tarihRaporlamaTextBox.Text += tarihAraligindakiSiparisler.Count + " adet sipariş bulundu";
+                else
+                    tarihRaporlamaTextBox.Text += "Girilen tarih aralığında hiç sipariş bulunamadı";
+
+                logger.RaporLogEkle("Girilen tarih aralığındaki siparişler için raporlama hazırlandı, ekrana verildi");
+            }
+            catch (Exception ex)
+            {
+                logger.RaporHataLogEkle("Tarih aralığındaki siparişler raporlamasında hata: " + ex.Message);
+            }
         }
 
         private void tumSiparisleriGetirButton_Click(object sender, EventArgs e)
         {
-            raporTabDataGridView.DataSource = siparisleriGetir().ToDataTable();
+            try
+            {
+                logger.RaporLogEkle("Tüm siparişler çekiliyor");
+
+                raporTabDataGridView.DataSource = siparisleriGetir().ToDataTable();
+
+                logger.RaporLogEkle("Tüm siparişler ekrana verildi");
+            }
+            catch (Exception ex)
+            {
+                logger.RaporHataLogEkle("Tüm siparişlerin raporlamasında hata: " + ex.Message);
+            }
         }
 
         private string ortalamaSureHesaplama(List<Siparis> siparisler, string sureTipi)
         {
-            TimeSpan toplamTeslimatSuresi = new TimeSpan();
-            TimeSpan parsed = new TimeSpan();
-
-            foreach (var siparis in siparisler)
+            try
             {
+                logger.RaporLogEkle("Siparişler için ortalama süre hesaplaması yapılıyor");
 
-                switch (sureTipi)
+                TimeSpan toplamTeslimatSuresi = new TimeSpan();
+                TimeSpan parsed = new TimeSpan();
+
+                foreach (var siparis in siparisler)
                 {
-                    case "hazırlama":
-                        parsed = TimeSpan.Parse(siparis.HazirlanmaSuresi);
-                        break;
 
-                    case "teslimat":
-                        parsed = TimeSpan.Parse(siparis.TeslimatSuresi);
-                        break;
+                    switch (sureTipi)
+                    {
+                        case "hazırlama":
+                            parsed = TimeSpan.Parse(siparis.HazirlanmaSuresi);
+                            break;
+
+                        case "teslimat":
+                            parsed = TimeSpan.Parse(siparis.TeslimatSuresi);
+                            break;
+                    }
+
+                    toplamTeslimatSuresi += parsed;
                 }
 
-                toplamTeslimatSuresi += parsed;
+                TimeSpan ortalama = new TimeSpan(toplamTeslimatSuresi.Ticks / siparisler.Count);
+
+                logger.RaporLogEkle("Ortalama süre hesaplaması yapıldı");
+
+                return ortalama.ToString("hh\\:mm\\:ss");
             }
-
-            TimeSpan ortalama = new TimeSpan(toplamTeslimatSuresi.Ticks / siparisler.Count);
-
-            return ortalama.ToString("hh\\:mm\\:ss");
+            catch (Exception ex)
+            {
+                logger.RaporHataLogEkle("Tüm siparişlerin raporlamasında hata: " + ex.Message);
+                return "##Hesaplanamadı##";
+            }
         }
         #endregion
     }

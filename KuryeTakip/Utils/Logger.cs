@@ -22,6 +22,9 @@ namespace KuryeTakip.Utils
             string formattedLog = logFormatla(log) + Environment.NewLine;
             this.form.logTextBox.Text += formattedLog;
             this.form.kayitLogTextBox.Text += formattedLog;
+
+            enAltaScroll(this.form.logTextBox);
+            enAltaScroll(this.form.kayitLogTextBox);
         }
 
         public void HataLogEkle(string log)
@@ -29,6 +32,29 @@ namespace KuryeTakip.Utils
             string formattedLog = hataLogFormatla(log) + Environment.NewLine;
             this.form.logTextBox.Text += formattedLog;
             this.form.kayitLogTextBox.Text += formattedLog;
+
+            enAltaScroll(this.form.logTextBox);
+            enAltaScroll(this.form.kayitLogTextBox);
+        }
+
+        public void RaporLogEkle(string log)
+        {
+            string formattedLog = logFormatla(log) + Environment.NewLine;
+            this.form.logTextBox.Text += formattedLog;
+            this.form.raporlamaLogTextBox.Text += formattedLog;
+
+            enAltaScroll(this.form.logTextBox);
+            enAltaScroll(this.form.raporlamaLogTextBox);
+        }
+
+        public void RaporHataLogEkle(string log)
+        {
+            string formattedLog = hataLogFormatla(log) + Environment.NewLine;
+            this.form.logTextBox.Text += formattedLog;
+            this.form.raporlamaLogTextBox.Text += formattedLog;
+
+            enAltaScroll(this.form.logTextBox);
+            enAltaScroll(this.form.raporlamaLogTextBox);
         }
 
         public void SiparisTamamlandiLogEkle(DataAccessLayer.Siparis siparis)
@@ -57,6 +83,12 @@ namespace KuryeTakip.Utils
         public string hataLogFormatla(string log)
         {
             return  "[**HATA**] ---- " + log;
+        }
+
+        private void enAltaScroll(RichTextBox richTextBox)
+        {
+            richTextBox.SelectionStart = richTextBox.Text.Length;
+            richTextBox.ScrollToCaret();
         }
     }
 }

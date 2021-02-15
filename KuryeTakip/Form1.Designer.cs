@@ -52,7 +52,7 @@ namespace KuryeTakip
             this.tarihRaporlamaTextBox = new System.Windows.Forms.RichTextBox();
             this.tarihTumSiparisleriGetirButton = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
-            this.richTextBox5 = new System.Windows.Forms.RichTextBox();
+            this.raporlamaLogTextBox = new System.Windows.Forms.RichTextBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.tumSiparisleriGetirButton = new System.Windows.Forms.Button();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
@@ -290,7 +290,7 @@ namespace KuryeTakip
             // tabRaporlama
             // 
             this.tabRaporlama.Controls.Add(this.groupBox15);
-            this.tabRaporlama.Controls.Add(this.richTextBox5);
+            this.tabRaporlama.Controls.Add(this.raporlamaLogTextBox);
             this.tabRaporlama.Controls.Add(this.groupBox14);
             this.tabRaporlama.Controls.Add(this.groupBox13);
             this.tabRaporlama.Controls.Add(this.groupBox12);
@@ -370,13 +370,13 @@ namespace KuryeTakip
             this.label13.TabIndex = 2;
             this.label13.Text = "Başlangıç:";
             // 
-            // richTextBox5
+            // raporlamaLogTextBox
             // 
-            this.richTextBox5.Location = new System.Drawing.Point(804, 268);
-            this.richTextBox5.Name = "richTextBox5";
-            this.richTextBox5.Size = new System.Drawing.Size(347, 223);
-            this.richTextBox5.TabIndex = 6;
-            this.richTextBox5.Text = "";
+            this.raporlamaLogTextBox.Location = new System.Drawing.Point(804, 268);
+            this.raporlamaLogTextBox.Name = "raporlamaLogTextBox";
+            this.raporlamaLogTextBox.Size = new System.Drawing.Size(347, 223);
+            this.raporlamaLogTextBox.TabIndex = 6;
+            this.raporlamaLogTextBox.Text = "";
             // 
             // groupBox14
             // 
@@ -1245,7 +1245,6 @@ namespace KuryeTakip
         private System.Windows.Forms.ComboBox kuryeRaporlamaComboBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DataGridView raporTabDataGridView;
-        private System.Windows.Forms.RichTextBox richTextBox5;
         private System.Windows.Forms.GroupBox groupBox15;
         private System.Windows.Forms.DateTimePicker bitisTarihDateTimePicker;
         private System.Windows.Forms.DateTimePicker baslangicTarihDateTimePicker;
@@ -1269,6 +1268,7 @@ namespace KuryeTakip
         private System.Windows.Forms.DataGridViewCheckBoxColumn kuryeYolda;
         private System.Windows.Forms.DataGridViewTextBoxColumn dagitimSuresi;
         private System.Windows.Forms.DataGridViewCheckBoxColumn teslimEdildi;
+        public System.Windows.Forms.RichTextBox raporlamaLogTextBox;
     }
 }
 
