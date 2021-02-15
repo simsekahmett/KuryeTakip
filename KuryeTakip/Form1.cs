@@ -67,7 +67,16 @@ namespace KuryeTakip
             //database var mı yok mu kontrol
             try
             {
+                logger.LogEkle("Database var mı yok mu kontrol ediliyor");
+
                 dbVar = Startup.DBVarMi();
+
+                if(dbVar)
+                    logger.LogEkle("Database bulundu");
+                else
+                    logger.LogEkle("Database bulunamadı");
+
+
             }
             catch (Exception ex)
             {
@@ -79,8 +88,12 @@ namespace KuryeTakip
             {
                 if (!dbVar)
                 {
+                    logger.LogEkle("Database kurulumu yapılıyor");
+
                     Startup.DBKur();
                     dbVar = true;
+
+                    logger.LogEkle("Database kurulumu yapıldı");
                 }
             }
             catch (Exception ex)
