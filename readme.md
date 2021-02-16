@@ -30,12 +30,14 @@ Sipariş içerisindekiler;
 - Ürün Dağıtım Süresi => kuryenin ürünü aldıktan sonra alıcıya teslimatının süresi,
 - Teslim Edildi => kurye ürünü teslim ettiği zaman işaretlenecek checkbox.
 
+```
 * Siparişlerin listelendiği ekran "WinForms ~ DataGridView" objesidir.
 * DataGridView içerisindeki satırları oluşturulurken "DataGridViewTextBoxCell, DataGridViewComboBoxCell ve DataGridViewCheckBoxCell"ler kullanılmıştır.
 * Her satırın kendisine ait 2 adet "StopWatch"ları vardır. (Ürün alınma süresi ve ürün dağıtım sürelerinin sayaçları)
 * Restoran > Dağıtım Bölgesi > Ödeme yöntemi seçilmesi halinde "Ürün Alınma Süresi" sayacı başlar ve siparişin durumu "Alınıyor" olarak belirlenir.
 * Kurye seçimi yapıldıktan sonra "Ürün Teslim Alındı" kutucuğunun tiklenmesi halinde "Ürün Dağıtım Süresi" sayacı başlar ve siparişin durumu "Yolda" olarak belirlenir.
 * "Teslim Edildi" kutucuğunun tiklenmesiyle ilgili sipariş girilen bilgilerle "Tamamlandı" olarak belirlenir ve veritabanına kayıt işlemi gerçekleştirilir.
+```
 ![](KuryeTakip/ScreenShots/ss1.PNG)
 
 ### Raporlama
@@ -46,9 +48,11 @@ Geniş raporlama seçenekleri ile her sipariş kaydının aşağıdaki filtreler
 - Ödeme Yöntemi [Metrikler: Seçilen ödeme yöntemiyle kayıtlı toplam sipariş sayısı] 
 - Tarih Aralığı [Metrikler: Seçilen tarih aralığındaki toplam sipariş sayısı]
 
+```
 * Raporlama sekmesinde metrikler hespalanırken siparişler "LINQ" objesi üzerinden sorgulanıp "DataTable"a dönüştürülerek "DataGridView"de gösterilir.
 * Yukarıdaki belirtilen filtrelerle yapılan sorguların siparişlerinin tümü "DataGridView"da gösterilir (Örn: Kurye seçimi sonrası seçilen kuryenin siparişleri).
 * Raporlama sekmesinde yapılan işlemlerin loglarını gösteren "TextBox" mevcuttur, veritabanı ve "LINQ" işlemleri esnasında oluşan olası hatalar da burada loglanır.
+```
 ![](KuryeTakip/ScreenShots/ss2.PNG)
 
 ### Kayıt
@@ -73,7 +77,9 @@ Gösterilen bilgiler;
 - Dağıtımda olan kuryeler
 - Tarih ve saat
 
+```
 * Bu alandaki bilgiler anlık olarak "Timer" aracılığıyla saniyelik güncellenir.
+```
 
 # Delivery Management System [:gb:]
 Delivery management software with using Restaurant, Area, Courier, Payment Methods and Delivery times.
@@ -107,12 +113,14 @@ An order includes;
 - Ürün Dağıtım Süresi => the time has been taken by the courier to deliver the order,
 - Teslim Edildi => the checkbox which is going to be checked when courier delivered the order.
 
+```
 * Orders are being listed in "Winforms ~ DataGridView".
 * "DataGridViewTextBoxCell, DataGridViewComboBoxCell and DataGridViewCheckBoxCell" used to create rows in DataGridView.
 * Each row has 2 "StopWatch" objects inside. (Order take from restaurant time and order delivery time)
 * After selecting Restaurant, Area and Payment method; "Order take from restaurant" stopwatch will be triggerred to count. Also the status of the order will be shown as "Alınıyor".
 * After selecting the courier and checking the "Ürün Teslim Alındı" checkbox; "Order delivery time" stopwatch will be triggerred to count and the status of the order will be shown as "Yolda".
 * When "Teslim Edildi" checkbox checked; order will be stored into database with changing status to "Tamamlandı".
+```
 ![](KuryeTakip/ScreenShots/ss1.PNG)
 
 ### Raporlama
@@ -123,9 +131,11 @@ Metrics of the orders and the corresponding order list with given filters.
 - By Payment Method [Metrics: Number of the orders paid with the selected method]
 - By Date Range [Metrics: Number of the orders have been delivered in the given date range]
 
+```
 * In this tab, metrics are being calculated with converting all stored orderes into the list via querying with "LINQ". Then converting the queried list to a DataTable to connect for DataGridView as datasource.
 * All selected filters will be applied to all orders and will be shown in DataGridView. (i.e: All orders for selected courier will be listed)
 * All logs for the operations in that tab will be written to the "TextBox". Also exceptions for the database or LINQ operations will be shown as well.
+```
 ![](KuryeTakip/ScreenShots/ss2.PNG)
 
 ### Kayıt
@@ -148,4 +158,6 @@ The groupbox which contains labels for;
 - Couriers on the way for delivery
 - Current Date and Time
 
+```
 * All the labels are being updated with a "Timer" in every second.
+```
