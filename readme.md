@@ -1,4 +1,4 @@
-﻿# Kurye Takip Yazılımı [ :tr: ]
+﻿# Kurye Takip Yazılımı [:tr:]
 Restoran, Bölge, Kurye, Ödeme Yöntemi ve Teslimat süreleri kullanılarak sipariş kaydı yapıp kuryelerin performansının takibinin yapılabileceği kontrol yazılımı.
 
 ``` Kullanılan teknolojiler;
@@ -75,7 +75,7 @@ Gösterilen bilgiler;
 
 * Bu alandaki bilgiler anlık olarak "Timer" aracılığıyla saniyelik güncellenir.
 
-# Delivery Management System [ :gb: ]
+# Delivery Management System [:gb:]
 Delivery management software with using Restaurant, Area, Courier, Payment Methods and Delivery times.
 
 ``` Technologies used;
