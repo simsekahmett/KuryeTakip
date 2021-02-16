@@ -167,7 +167,6 @@
       <LastGenOutput>KuryeTakipDatabase.cs</LastGenOutput>
       <DependentUpon>KuryeTakipDatabase.edmx</DependentUpon>
     </Content>
-    <None Include="readme.md" />
     <None Include="Resources\Icon.ico" />
   </ItemGroup>
   <ItemGroup>
