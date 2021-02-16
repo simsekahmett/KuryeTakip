@@ -167,7 +167,11 @@
       <LastGenOutput>KuryeTakipDatabase.cs</LastGenOutput>
       <DependentUpon>KuryeTakipDatabase.edmx</DependentUpon>
     </Content>
+    <None Include="readme.md" />
     <None Include="Resources\Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ScreenShots\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
