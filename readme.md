@@ -33,7 +33,7 @@ Sipariş içerisindekiler;
 * Restoran > Dağıtım Bölgesi > Ödeme yöntemi seçilmesi halinde "Ürün Alınma Süresi" sayacı başlar ve siparişin durumu "Alınıyor" olarak belirlenir.
 * Kurye seçimi yapıldıktan sonra "Ürün Teslim Alındı" kutucuğunun tiklenmesi halinde "Ürün Dağıtım Süresi" sayacı başlar ve siparişin durumu "Yolda" olarak belirlenir.
 * "Teslim Edildi" kutucuğunun tiklenmesiyle ilgili sipariş girilen bilgilerle "Tamamlandı" olarak belirlenir ve veritabanına kayıt işlemi gerçekleştirilir.
-![](KuryeTakip/ScreenShots/ss1.png)
+![](KuryeTakip/ScreenShots/ss1.PNG)
 
 #### Raporlama
 Geniş raporlama seçenekleri ile her sipariş kaydının aşağıdaki filtrelerdeki metrikleri ve sipariş kayıtları gösterilir;
@@ -46,18 +46,18 @@ Geniş raporlama seçenekleri ile her sipariş kaydının aşağıdaki filtreler
 * Raporlama sekmesinde metrikler hespalanırken siparişler "LINQ" objesi üzerinden sorgulanıp "DataTable"a dönüştürülerek "DataGridView"de gösterilir.
 * Yukarıdaki belirtilen filtrelerle yapılan sorguların siparişlerinin tümü "DataGridView"da gösterilir (Örn: Kurye seçimi sonrası seçilen kuryenin siparişleri).
 * Raporlama sekmesinde yapılan işlemlerin loglarını gösteren "TextBox" mevcuttur, veritabanı ve "LINQ" işlemleri esnasında oluşan olası hatalar da burada loglanır.
-![](KuryeTakip/ScreenShots/ss2.png)
+![](KuryeTakip/ScreenShots/ss2.PNG)
 
 #### Kayıt
 Siparişlerin oluşturulması için gerekli bilgilerin kayıt ve silme işlemlerinin yapıldığı sekme.
-![](KuryeTakip/ScreenShots/ss3.png)
+![](KuryeTakip/ScreenShots/ss3.PNG)
 
 #### Ayar
 _Bu sekme geliştirilme sürecindedir_
 
 #### Loglar
 Tüm yazılımın operasyonel loglarını tutan log ekranı. Karşılaşılan hatalar da bu ekranda gösterilir.
-![](KuryeTakip/ScreenShots/ss5.png)
+![](KuryeTakip/ScreenShots/ss5.PNG)
 
 ## Anlık Bilgi Ekranı
 Anlık olarak sipariş ve kurye bilgilerinin gösterildiği labelları içeren "GroupBox".
