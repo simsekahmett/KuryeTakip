@@ -8,9 +8,9 @@ Restoran, Bölge, Kurye, Ödeme Yöntemi ve Teslimat süreleri kullanılarak sip
 ```
 
 ``` Gerekli ön koşullar;
-	- [.Net Framework 4.7.2] (https://support.microsoft.com/tr-tr/topic/microsoft-net-framework-4-7-2-windows-için-çevrimdışı-yükleyici-05a72734-2127-a15d-50cf-daf56d5faec2)
-	- [SQL Express] (https://go.microsoft.com/fwlink/?linkid=866658)
-	- [SSMS * isteğe bağlı] (https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
+	- [.Net Framework 4.7.2](https://support.microsoft.com/tr-tr/topic/microsoft-net-framework-4-7-2-windows-için-çevrimdışı-yükleyici-05a72734-2127-a15d-50cf-daf56d5faec2)
+	- [SQL Express](https://go.microsoft.com/fwlink/?linkid=866658)
+	- [SSMS * isteğe bağlı](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
 ```
 
 ## Sekmeler
