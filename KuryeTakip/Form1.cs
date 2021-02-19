@@ -564,7 +564,7 @@ namespace KuryeTakip
         private void BilgilendirmeLabellarTimer_Tick(object sender, ElapsedEventArgs e)
         {
             label15.Text = DateTime.Now.ToString();
-            label16.Text = "Hazırlanma aşamasındaki sipariş sayısı: " + aktifUrunTimerSayisi;
+            label16.Text = "Ürünü alma aşamasındaki sipariş sayısı: " + aktifUrunTimerSayisi;
             label17.Text = "Teslimat aşamasındaki sipariş sayısı: " + aktifTeslimatTimerSayisi;
             label18.Text = "Oturumda tamamlanan sipariş sayısı: " + oturumdaTamamlananSiparisSayisi;
             label19.Text = "Toplam tamamlanan sipariş sayısı: " + kayitliSiparislerSayisi;
