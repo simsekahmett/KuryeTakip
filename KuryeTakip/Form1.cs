@@ -71,7 +71,7 @@ namespace KuryeTakip
 
                 dbVar = Startup.DBVarMi();
 
-                if(dbVar)
+                if (dbVar)
                     logger.LogEkle("Database bulundu");
                 else
                     logger.LogEkle("Database bulunamadı");
@@ -551,7 +551,8 @@ namespace KuryeTakip
                     {
                         timer.Key.Cells[8].Value = timer.Value.Elapsed.ToString("hh\\:mm\\:ss");
                         aktifTeslimatTimerSayisi++;
-                        dagitimdakiKuryeler += timer.Key.Cells[6].FormattedValue + ", ";
+                        if (!dagitimdakiKuryeler.Contains(timer.Key.Cells[6].FormattedValue.ToString()))
+                            dagitimdakiKuryeler += timer.Key.Cells[6].FormattedValue + ", ";
                     }
                 }
             }
@@ -594,7 +595,7 @@ namespace KuryeTakip
                 odemeRaporlamaComboBox.ValueMember = "Id";
             }
 
-            if(tabControl1.SelectedTab == tabControl1.TabPages["tabKayit"])
+            if (tabControl1.SelectedTab == tabControl1.TabPages["tabKayit"])
             {
                 kuryelerComboBox.DataSource = kuryelerDataSource;
                 kuryelerComboBox.DisplayMember = "Isim";
@@ -613,7 +614,7 @@ namespace KuryeTakip
                 odemeYontemiComboBox.ValueMember = "Id";
             }
         }
-#endregion
+        #endregion
 
         #region RAPORLAMA TAB
         private void kuryeTumSiparisleriGetirButton_Click(object sender, EventArgs e)
@@ -691,7 +692,7 @@ namespace KuryeTakip
 
         private void odemeTumSiparisleriGetirButton_Click(object sender, EventArgs e)
         {
-           try
+            try
             {
                 logger.RaporLogEkle("Ödeme Yöntemi raporlaması için tüm siparişler çekiliyor");
 
