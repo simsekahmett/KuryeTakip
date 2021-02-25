@@ -64,10 +64,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminLoginPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminLoginPopup.Designer.cs">
+      <DependentUpon>AdminLoginPopup.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataAccessLayer\Ayar.cs">
       <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccessLayer\Bolge.cs">
+      <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessLayer\Kullanici.cs">
       <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccessLayer\Kurye.cs">
@@ -79,7 +88,9 @@
     <Compile Include="DataAccessLayer\Restoran.cs">
       <DependentUpon>KuryeTakipDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataAccessLayer\Services\AyarService.cs" />
     <Compile Include="DataAccessLayer\Services\BolgeService.cs" />
+    <Compile Include="DataAccessLayer\Services\KullaniciService.cs" />
     <Compile Include="DataAccessLayer\Services\KuryeService.cs" />
     <Compile Include="DataAccessLayer\DBInitializer.cs" />
     <Compile Include="DataAccessLayer\Services\OdemeYontemiService.cs" />
@@ -109,8 +120,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KuryeTakipDatabase.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ControlExtensions.cs" />
     <Compile Include="Helpers\DataTableHelper.cs" />
     <Compile Include="Helpers\DGVRowHelper.cs" />
+    <Compile Include="Helpers\PasswordHelper.cs" />
+    <Compile Include="Helpers\SMSHelper.cs" />
     <Compile Include="Models\SiparisDurumu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,8 +132,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utils\Startup.cs" />
+    <EmbeddedResource Include="AdminLoginPopup.resx">
+      <DependentUpon>AdminLoginPopup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

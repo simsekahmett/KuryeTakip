@@ -16,5 +16,6 @@ namespace KuryeTakip.DataAccessLayer
     {
         public int Id { get; set; }
         public string Isim { get; set; }
+        public string Tel { get; set; }
     }
 }

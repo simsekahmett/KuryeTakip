@@ -11,6 +11,7 @@
         <EntityTypeShape EntityType="KuryeTakip.Bolge" Width="1.5" PointX="7.875" PointY="4.5" />
         <EntityTypeShape EntityType="KuryeTakip.Ayar" Width="1.5" PointX="10.25" PointY="4.125" />
         <EntityTypeShape EntityType="KuryeTakip.OdemeYontemi" Width="1.5" PointX="5.375" PointY="4.125" />
+        <EntityTypeShape EntityType="KuryeTakip.Kullanici" Width="1.5" PointX="12.125" PointY="1.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

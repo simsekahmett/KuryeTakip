@@ -10,14 +10,13 @@ namespace KuryeTakip.Helpers
 {
     public static class DGVRowHelper
     {
-        public static void DGVSatirlariOlustur(DataGridView dgv, List<Siparis> siparisler, BindingSource restoranlar, BindingSource kuryeler, BindingSource bolgeler, BindingSource odemeYontemleri, int count, int lastRowId = 0)
+        public static void DGVSatirlariOlustur(DataGridView dgv, BindingSource restoranlar, BindingSource kuryeler, BindingSource bolgeler, BindingSource odemeYontemleri, int count)
         {
            try
             {
                 for (int i = 0; i < count; i++)
                 {
                     DataGridViewRow satir = new DataGridViewRow();
-                    DataGridViewTextBoxCell siparisNum = new DataGridViewTextBoxCell();
                     DataGridViewComboBoxCell restoranSecme = new DataGridViewComboBoxCell();
                     DataGridViewComboBoxCell bolgeSecme = new DataGridViewComboBoxCell();
                     DataGridViewComboBoxCell odemeYontemiSecme = new DataGridViewComboBoxCell();
@@ -44,21 +43,7 @@ namespace KuryeTakip.Helpers
                     odemeYontemiSecme.DisplayMember = "YontemIsim";
                     odemeYontemiSecme.ValueMember = "Id";
 
-                    //eklenecek satırın sipariş numarasının değerinin hesaplanması
-                    if (siparisler.Count > 0)
-                    {
-                        siparisNum.Value = siparisler.LastOrDefault().Id + (i + 1);
-                    }
-                    else
-                        siparisNum.Value = i + 1;
-
-                    if (lastRowId > 0)
-                    {
-                        siparisNum.Value = lastRowId + 1;
-                    }
-
                     //eklenecek satırın sütunları sıralı olarak eklenmeli
-                    satir.Cells.Add(siparisNum);
                     satir.Cells.Add(restoranSecme);
                     satir.Cells.Add(bolgeSecme);
                     satir.Cells.Add(odemeYontemiSecme);

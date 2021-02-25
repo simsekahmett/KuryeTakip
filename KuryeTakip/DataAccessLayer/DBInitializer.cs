@@ -20,7 +20,8 @@ namespace KuryeTakip.DataAccessLayer
 
                 Restoran restoran = new Restoran()
                 {
-                    Isim = "Dummy Restoran"
+                    Isim = "Dummy Restoran",
+                    Tel = "05514474441"
                 };
 
                 Bolge bolge = new Bolge()
@@ -33,10 +34,17 @@ namespace KuryeTakip.DataAccessLayer
                     YontemIsim = "Dummy Ödeme"
                 };
 
+                Kullanici kullanici = new Kullanici()
+                {
+                    Username = "admin",
+                    Password = Helpers.PasswordHelper.CreateMD5("Admin1213!")
+                };
+
                 context.KuryeSet.Add(kurye);
                 context.RestoranSet.Add(restoran);
                 context.BolgeSet.Add(bolge);
                 context.OdemeYontemiSet.Add(odemeYontemi);
+                context.KullaniciSet.Add(kullanici);
             }
             catch(Exception ex)
             {

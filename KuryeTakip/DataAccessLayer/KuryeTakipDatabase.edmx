@@ -12,6 +12,7 @@
     <EntitySet Name="BolgeSet" EntityType="KuryeTakip.Store.BolgeSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AyarSet" EntityType="KuryeTakip.Store.AyarSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OdemeYontemiSet" EntityType="KuryeTakip.Store.OdemeYontemiSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="KullaniciSet" EntityType="KuryeTakip.Store.KullaniciSet" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
   <EntityType Name="KuryeSet">
     <Key>
@@ -26,6 +27,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Isim" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Tel" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="SiparisSet">
     <Key>
@@ -52,7 +54,10 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TelegramToken" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SMSUserCode" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SMSPassword" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SMSMessageHeader" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SMSMessageTemplate" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <EntityType Name="OdemeYontemiSet">
     <Key>
@@ -60,6 +65,14 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="YontemIsim" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KullaniciSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -72,6 +85,7 @@
           <EntitySet Name="BolgeSet" EntityType="KuryeTakip.Bolge" />
           <EntitySet Name="AyarSet" EntityType="KuryeTakip.Ayar" />
           <EntitySet Name="OdemeYontemiSet" EntityType="KuryeTakip.OdemeYontemi" />
+          <EntitySet Name="KullaniciSet" EntityType="KuryeTakip.Kullanici" />
         </EntityContainer>
         <EntityType Name="Kurye">
           <Key>
@@ -86,6 +100,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Isim" Type="String" Nullable="false" />
+          <Property Name="Tel" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Siparis">
           <Key>
@@ -112,7 +127,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TelegramToken" Type="String" Nullable="false" />
+          <Property Name="SMSUserCode" Type="String" Nullable="true" />
+          <Property Name="SMSPassword" Type="String" Nullable="true" />
+          <Property Name="SMSMessageHeader" Type="String" Nullable="true" />
+          <Property Name="SMSMessageTemplate" Type="String" Nullable="true" />
         </EntityType>
         <EntityType Name="OdemeYontemi">
           <Key>
@@ -120,6 +138,14 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="YontemIsim" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -140,6 +166,7 @@
         <MappingFragment StoreEntitySet="RestoranSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Isim" ColumnName="Isim" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -169,7 +196,10 @@
       <EntityTypeMapping TypeName="IsTypeOf(KuryeTakip.Ayar)">
         <MappingFragment StoreEntitySet="AyarSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="TelegramToken" ColumnName="TelegramToken" />
+          <ScalarProperty Name="SMSUserCode" ColumnName="SMSUserCode" />
+          <ScalarProperty Name="SMSPassword" ColumnName="SMSPassword" />
+          <ScalarProperty Name="SMSMessageHeader" ColumnName="SMSMessageHeader" />
+          <ScalarProperty Name="SMSMessageTemplate" ColumnName="SMSMessageTemplate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -178,6 +208,15 @@
         <MappingFragment StoreEntitySet="OdemeYontemiSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="YontemIsim" ColumnName="YontemIsim" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KullaniciSet">
+      <EntityTypeMapping TypeName="IsTypeOf(KuryeTakip.Kullanici)">
+        <MappingFragment StoreEntitySet="KullaniciSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

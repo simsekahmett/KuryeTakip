@@ -14,7 +14,8 @@ namespace KuryeTakip.DataAccessLayer
                 {
                     var kayit = new Restoran()
                     {
-                        Isim = restoran.Isim
+                        Isim = restoran.Isim,
+                        Tel = restoran.Tel
                     };
 
                     context.RestoranSet.Add(kayit);

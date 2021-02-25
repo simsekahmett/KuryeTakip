@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows.Forms;
 
@@ -39,10 +42,13 @@ namespace KuryeTakip
         public string dagitimdakiKuryeler = "";
         #endregion
 
-        #region FORM1 CONSTRUCTOR & LOAD EVENT
+        #region FORM1 CONSTRUCTOR & LOAD & PAINT & RESIZE HANDLERS
         public Form1()
         {
             InitializeComponent();
+
+            //form flickering önleme
+            this.DoubleBuffered = true;
 
             //anlık bilgi kısmı  labellar
             label15.Text = "";
@@ -98,7 +104,7 @@ namespace KuryeTakip
             }
             catch (Exception ex)
             {
-                logger.HataLogEkle("Database kurulumu yapılamadı: " + ex);
+                logger.HataLogEkle("Database kurulumu yapılamadı: " + ex.ToString());
             }
 
             //veritabanından kurye, restoran, bölgeler ve ödeme yöntemleri bilgileri getiriliyor
@@ -114,7 +120,7 @@ namespace KuryeTakip
             }
             catch (Exception ex)
             {
-                logger.HataLogEkle("Database veri çekim işlemi yapılamadı: " + ex);
+                logger.HataLogEkle("Database veri çekim işlemi yapılamadı: " + ex.ToString());
             }
 
             //ürün teslimat stopwatch'larının ekranda değerini gösterecek timer
@@ -139,7 +145,17 @@ namespace KuryeTakip
             kayitliSiparislerSayisi = tumKayitliSiparisler.Count();
 
             //form açılışında datagridview'a boş sipariş satırları oluşturuyor
-            DGVRowHelper.DGVSatirlariOlustur(dataGridView1, tumKayitliSiparisler, restoranlarDataSource, kuryelerDataSource, bolgelerDataSource, odemeYontemiDataSource, 5);
+            DGVRowHelper.DGVSatirlariOlustur(dataGridView1, restoranlarDataSource, kuryelerDataSource, bolgelerDataSource, odemeYontemiDataSource, 5);
+        }
+
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            
+        }
+
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            this.Invalidate();
         }
         #endregion
 
@@ -184,30 +200,30 @@ namespace KuryeTakip
                     if (e.RowIndex != -1)
                     {
                         //ürün teslim alındı checkbox
-                        if (e.ColumnIndex == 7)
+                        if (e.ColumnIndex == 6)
                         {
-                            if ((bool)seciliRow.Cells[7].Value)
+                            if ((bool)seciliRow.Cells[6].Value)
                             {
                                 var urunStopwatch = urunTimerlar[dataGridView1.Rows[e.RowIndex]];
                                 var teslimStopWatch = teslimatTimerlar[dataGridView1.Rows[e.RowIndex]];
 
                                 urunStopwatch.Stop();
                                 teslimStopWatch.Start();
-                                dataGridView1.Rows[e.RowIndex].Cells[4].Value = Models.SiparisDurumu.Yolda.Durum;
+                                dataGridView1.Rows[e.RowIndex].Cells[3].Value = Models.SiparisDurumu.Yolda.Durum;
                             }
                         }
 
                         //urun teslim edildi checkbox
-                        if (e.ColumnIndex == 9)
+                        if (e.ColumnIndex == 8)
                         {
                             //checkbox checked
-                            if ((bool)seciliRow.Cells[9].Value)
+                            if ((bool)seciliRow.Cells[8].Value)
                             {
                                 if (dataGridView1.Rows[e.RowIndex].Cells[8].Value == null)
                                 {
-                                    dataGridView1[9, e.RowIndex].Value = false;
+                                    dataGridView1[8, e.RowIndex].Value = false;
                                     dataGridView1.RefreshEdit();
-                                    logger.HataLogEkle((int)dataGridView1.Rows[e.RowIndex].Cells[0].Value + " numaralı sipariş için ödeme yöntemi seçilmeden tamamlandıya basıldı");
+                                    logger.HataLogEkle("Seçili siipariş için ödeme yöntemi seçilmeden tamamlandıya basıldı");
                                     return;
                                 }
 
@@ -216,12 +232,12 @@ namespace KuryeTakip
                                 var teslimStopwatch = teslimatTimerlar[dataGrid.Rows[e.RowIndex]];
                                 teslimStopwatch.Stop();
 
-                                dataGridView1.Rows[e.RowIndex].Cells[4].Value = Models.SiparisDurumu.Tamamlandi.Durum;
+                                dataGridView1.Rows[e.RowIndex].Cells[3].Value = Models.SiparisDurumu.Tamamlandi.Durum;
 
-                                Restoran restoran = restoranlarDataSource.List.OfType<Restoran>().Where(k => k.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[1].Value).FirstOrDefault();
-                                Kurye kurye = kuryelerDataSource.List.OfType<Kurye>().Where(k => k.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[6].Value).FirstOrDefault();
-                                Bolge bolge = bolgelerDataSource.List.OfType<Bolge>().Where(b => b.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[2].Value).FirstOrDefault();
-                                OdemeYontemi odemeYontemi = odemeYontemiDataSource.List.OfType<OdemeYontemi>().Where(y => y.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[3].Value).FirstOrDefault();
+                                Restoran restoran = restoranlarDataSource.List.OfType<Restoran>().Where(k => k.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[0].Value).FirstOrDefault();
+                                Kurye kurye = kuryelerDataSource.List.OfType<Kurye>().Where(k => k.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[5].Value).FirstOrDefault();
+                                Bolge bolge = bolgelerDataSource.List.OfType<Bolge>().Where(b => b.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[1].Value).FirstOrDefault();
+                                OdemeYontemi odemeYontemi = odemeYontemiDataSource.List.OfType<OdemeYontemi>().Where(y => y.Id == (int)dataGridView1.Rows[e.RowIndex].Cells[2].Value).FirstOrDefault();
 
                                 Siparis tamamlananSiparis = new Siparis()
                                 {
@@ -242,7 +258,10 @@ namespace KuryeTakip
                                 oturumdaTamamlananSiparisSayisi++;
 
                                 dataGridView1.Rows.Remove(seciliRow);
-                                DGVRowHelper.DGVSatirlariOlustur(dataGridView1, siparisleriGetir(), restoranlarDataSource, kuryelerDataSource, bolgelerDataSource, odemeYontemiDataSource, 1, (int)dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[0].Value);
+                                DGVRowHelper.DGVSatirlariOlustur(dataGridView1, restoranlarDataSource, kuryelerDataSource, bolgelerDataSource, odemeYontemiDataSource, 1);
+
+                                logger.LogEkle(tamamlananSiparis.Id + " numaralı siparişin tamamlandı sms\'i " + restoran.Tel + " numarasına gönderiliyor");
+                                logger.LogEkle("SMS Gönderim işlemi sonucu: " + SMSHelper.SMSGonder(tamamlananSiparis, restoran.Tel));
                             }
                         }
                     }
@@ -250,7 +269,7 @@ namespace KuryeTakip
             }
             catch (Exception ex)
             {
-                logger.HataLogEkle(ex.Message);
+                logger.HataLogEkle("Sipariş tamamlama işlemi esnasında hata: " + ex.ToString());
             }
         }
 
@@ -259,11 +278,11 @@ namespace KuryeTakip
             if (e.RowIndex != -1)
             {
                 //ödeme yöntemi seçildi
-                if (e.ColumnIndex == 3 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                if (e.ColumnIndex == 2 && dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
                     var urunStopwatch = urunTimerlar[dataGridView1.Rows[e.RowIndex]];
                     urunStopwatch.Start();
-                    dataGridView1.Rows[e.RowIndex].Cells[4].Value = Models.SiparisDurumu.Aliniyor.Durum;
+                    dataGridView1.Rows[e.RowIndex].Cells[3].Value = Models.SiparisDurumu.Aliniyor.Durum;
                 }
             }
         }
@@ -288,8 +307,7 @@ namespace KuryeTakip
         //sağ click menü "ekle"
         private void menuItemEkle_Click(object sender, EventArgs e)
         {
-            int lastRowId = (int)dataGridView1.Rows[dataGridView1.Rows.Count - 2].Cells[0].Value;
-            DGVRowHelper.DGVSatirlariOlustur(dataGridView1, siparisleriGetir(), restoranlarDataSource, kuryelerDataSource, bolgelerDataSource, odemeYontemiDataSource, 1, lastRowId);
+            DGVRowHelper.DGVSatirlariOlustur(dataGridView1, restoranlarDataSource, kuryelerDataSource, bolgelerDataSource, odemeYontemiDataSource, 1);
         }
         #endregion
 
@@ -336,11 +354,18 @@ namespace KuryeTakip
 
         private void restoranKaydetButton_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(restoranKayitIsimTextBox.Text))
+            if (!Regex.Match(restoranKayitTelTextBox.Text, @"^([0-9]{11})$").Success)
+            {
+                MessageBox.Show("Lütfen geçerli bir telefon numarası girin" + Environment.NewLine + "Örnek: 05123456789", "❎ Geçersiz Telefon Numarası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(restoranKayitIsimTextBox.Text) && !string.IsNullOrEmpty(restoranKayitTelTextBox.Text))
             {
                 RestoranService.RestoranKaydet(new Restoran()
                 {
-                    Isim = restoranKayitIsimTextBox.Text
+                    Isim = restoranKayitIsimTextBox.Text,
+                    Tel = restoranKayitTelTextBox.Text
                 });
 
                 logger.LogEkle(restoranKayitIsimTextBox.Text + " restoran eklendi");
@@ -348,7 +373,7 @@ namespace KuryeTakip
                 restoranlariGetir();
             }
             else
-                logger.LogEkle("Restoran ismi girilmediği için kayıt yapılamadı");
+                logger.LogEkle("Restoran ismi ya da telefon numarası girilmediği için kayıt yapılamadı");
         }
 
         private void restoranlariGetirButton_Click(object sender, EventArgs e)
@@ -528,14 +553,14 @@ namespace KuryeTakip
                 {
                     if (timer.Value.IsRunning)
                     {
-                        timer.Key.Cells[5].Value = timer.Value.Elapsed.ToString("hh\\:mm\\:ss");
+                        timer.Key.Cells[4].Value = timer.Value.Elapsed.ToString("hh\\:mm\\:ss");
                         aktifUrunTimerSayisi++;
                     }
                 }
             }
             catch (Exception ex)
             {
-                logger.HataLogEkle(ex.ToString());
+                logger.HataLogEkle("Ürün timer tick methodunda hata: " + ex.ToString());
             }
         }
         private void TeslimatTimer_Tick(object sender, ElapsedEventArgs e)
@@ -549,20 +574,32 @@ namespace KuryeTakip
                 {
                     if (timer.Value.IsRunning)
                     {
-                        timer.Key.Cells[8].Value = timer.Value.Elapsed.ToString("hh\\:mm\\:ss");
+                        timer.Key.Cells[7].Value = timer.Value.Elapsed.ToString("hh\\:mm\\:ss");
                         aktifTeslimatTimerSayisi++;
-                        if (!dagitimdakiKuryeler.Contains(timer.Key.Cells[6].FormattedValue.ToString()))
-                            dagitimdakiKuryeler += timer.Key.Cells[6].FormattedValue + ", ";
+                        if (!dagitimdakiKuryeler.Contains(timer.Key.Cells[5].FormattedValue.ToString()))
+                            dagitimdakiKuryeler += timer.Key.Cells[5].FormattedValue + ", ";
                     }
                 }
             }
             catch (Exception ex)
             {
-                logger.HataLogEkle(ex.ToString());
+                logger.HataLogEkle("Teslimat timer tick methodunda hata: " + ex.ToString());
             }
         }
 
         private void BilgilendirmeLabellarTimer_Tick(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                this.UIThread(() => FillLabels());
+            }
+            catch(Exception ex)
+            {
+                logger.HataLogEkle("Bilgilendirme timer tick methodunda hata: " + ex.ToString());
+            }
+        }
+
+        private void FillLabels()
         {
             label15.Text = DateTime.Now.ToString();
             label16.Text = "Ürünü alma aşamasındaki sipariş sayısı: " + aktifUrunTimerSayisi;
@@ -578,40 +615,103 @@ namespace KuryeTakip
         {
             if (tabControl1.SelectedTab == tabControl1.TabPages["tabRaporlama"])
             {
-                kuryeRaporlamaComboBox.DataSource = kuryelerDataSource;
-                kuryeRaporlamaComboBox.DisplayMember = "Isim";
-                kuryeRaporlamaComboBox.ValueMember = "Id";
+                tabControl1.TabPages["tabRaporlama"].Hide();
 
-                restoranRaporlamaComboBox.DataSource = restoranlarDataSource;
-                restoranRaporlamaComboBox.DisplayMember = "Isim";
-                restoranRaporlamaComboBox.ValueMember = "Id";
+                AdminLoginPopup popup = new AdminLoginPopup();
+                if (popup.ShowDialog() == DialogResult.OK)
+                {
+                    tabControl1.TabPages["tabRaporlama"].Show();
 
-                bolgeRaporlamaComboBox.DataSource = bolgelerDataSource;
-                bolgeRaporlamaComboBox.DisplayMember = "Isim";
-                bolgeRaporlamaComboBox.ValueMember = "Id";
+                    kuryeRaporlamaComboBox.DataSource = kuryelerDataSource;
+                    kuryeRaporlamaComboBox.DisplayMember = "Isim";
+                    kuryeRaporlamaComboBox.ValueMember = "Id";
 
-                odemeRaporlamaComboBox.DataSource = odemeYontemiDataSource;
-                odemeRaporlamaComboBox.DisplayMember = "YontemIsim";
-                odemeRaporlamaComboBox.ValueMember = "Id";
+                    restoranRaporlamaComboBox.DataSource = restoranlarDataSource;
+                    restoranRaporlamaComboBox.DisplayMember = "Isim";
+                    restoranRaporlamaComboBox.ValueMember = "Id";
+
+                    bolgeRaporlamaComboBox.DataSource = bolgelerDataSource;
+                    bolgeRaporlamaComboBox.DisplayMember = "Isim";
+                    bolgeRaporlamaComboBox.ValueMember = "Id";
+
+                    odemeRaporlamaComboBox.DataSource = odemeYontemiDataSource;
+                    odemeRaporlamaComboBox.DisplayMember = "YontemIsim";
+                    odemeRaporlamaComboBox.ValueMember = "Id";
+                }
+                else
+                    tabControl1.SelectedTab = tabControl1.TabPages["tabKuryeTakip"];
             }
 
             if (tabControl1.SelectedTab == tabControl1.TabPages["tabKayit"])
             {
-                kuryelerComboBox.DataSource = kuryelerDataSource;
-                kuryelerComboBox.DisplayMember = "Isim";
-                kuryelerComboBox.ValueMember = "Id";
+                tabControl1.TabPages["tabKayit"].Hide();
 
-                restoranlarComboBox.DataSource = restoranlarDataSource;
-                restoranlarComboBox.DisplayMember = "Isim";
-                restoranlarComboBox.ValueMember = "Id";
+                AdminLoginPopup popup = new AdminLoginPopup();
+                if (popup.ShowDialog() == DialogResult.OK)
+                {
+                    tabControl1.TabPages["tabKayit"].Show();
 
-                bolgelerComboBox.DataSource = bolgelerDataSource;
-                bolgelerComboBox.DisplayMember = "Isim";
-                bolgelerComboBox.ValueMember = "Id";
+                    kuryelerComboBox.DataSource = kuryelerDataSource;
+                    kuryelerComboBox.DisplayMember = "Isim";
+                    kuryelerComboBox.ValueMember = "Id";
 
-                odemeYontemiComboBox.DataSource = odemeYontemiDataSource;
-                odemeYontemiComboBox.DisplayMember = "YontemIsim";
-                odemeYontemiComboBox.ValueMember = "Id";
+                    restoranlarComboBox.DataSource = restoranlarDataSource;
+                    restoranlarComboBox.DisplayMember = "Isim";
+                    restoranlarComboBox.ValueMember = "Id";
+
+                    bolgelerComboBox.DataSource = bolgelerDataSource;
+                    bolgelerComboBox.DisplayMember = "Isim";
+                    bolgelerComboBox.ValueMember = "Id";
+
+                    odemeYontemiComboBox.DataSource = odemeYontemiDataSource;
+                    odemeYontemiComboBox.DisplayMember = "YontemIsim";
+                    odemeYontemiComboBox.ValueMember = "Id";
+                }
+                else
+                    tabControl1.SelectedTab = tabControl1.TabPages["tabKuryeTakip"];
+            }
+
+            if (tabControl1.SelectedTab == tabControl1.TabPages["tabAyar"])
+            {
+                tabControl1.TabPages["tabAyar"].Hide();
+
+                AdminLoginPopup popup = new AdminLoginPopup();
+                if (popup.ShowDialog() == DialogResult.OK)
+                {
+                    tabControl1.TabPages["tabAyar"].Show();
+
+                    Ayar smsAyarlari = AyarService.SMSAyarlariGetir();
+
+                    if (smsAyarlari != null)
+                    {
+                        if (smsAyarlari.SMSUserCode != null)
+                            smsUsedCodeTextBox.Text = smsAyarlari.SMSUserCode;
+
+                        if (smsAyarlari.SMSPassword != null)
+                            smsPasswordTextBox.Text = smsAyarlari.SMSPassword;
+
+                        if (smsAyarlari.SMSMessageHeader != null)
+                            smsHeaderTextBox.Text = smsAyarlari.SMSMessageHeader;
+
+                        if (smsAyarlari.SMSMessageTemplate != null)
+                            smsMessageTemplateTextBox.Text = smsAyarlari.SMSMessageTemplate;
+                    }
+                }
+                else
+                    tabControl1.SelectedTab = tabControl1.TabPages["tabKuryeTakip"];
+            }
+
+            if (tabControl1.SelectedTab == tabControl1.TabPages["tabLoglar"])
+            {
+                tabControl1.TabPages["tabLoglar"].Hide();
+                AdminLoginPopup popup = new AdminLoginPopup();
+                if (popup.ShowDialog() == DialogResult.OK)
+                {
+                    tabControl1.TabPages["tabLoglar"].Show();
+
+                }
+                else
+                    tabControl1.SelectedTab = tabControl1.TabPages["tabKuryeTakip"];
             }
         }
         #endregion
@@ -792,6 +892,112 @@ namespace KuryeTakip
             {
                 logger.RaporHataLogEkle("Tüm siparişlerin raporlamasında hata: " + ex.Message);
                 return "##Hesaplanamadı##";
+            }
+        }
+        #endregion
+
+        #region AYAR TAB
+        private void elementsListBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (elementsListBox.SelectedItem != null)
+            {
+                switch (elementsListBox.SelectedIndex)
+                {
+                    case 0:
+                        smsMessageTemplateTextBox.Text += "%siparisno% ";
+                        break;
+                    case 1:
+                        smsMessageTemplateTextBox.Text += "%restoranisim% ";
+                        break;
+                    case 2:
+                        smsMessageTemplateTextBox.Text += "%kuryeisim% ";
+                        break;
+                    case 3:
+                        smsMessageTemplateTextBox.Text += "%bolgeisim% ";
+                        break;
+                    case 4:
+                        smsMessageTemplateTextBox.Text += "%odemeyontemi% ";
+                        break;
+                    case 5:
+                        smsMessageTemplateTextBox.Text += "%tarihsaat% ";
+                        break;
+                }
+            }
+        }
+
+        private void smsAyarKaydetButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Ayar smsAyarlari = new Ayar()
+                {
+                    SMSUserCode = smsUsedCodeTextBox.Text,
+                    SMSPassword = smsPasswordTextBox.Text,
+                    SMSMessageHeader = smsHeaderTextBox.Text,
+                    SMSMessageTemplate = smsMessageTemplateTextBox.Text
+                };
+
+                if (AyarService.SMSAyarlariKaydet(smsAyarlari))
+                    MessageBox.Show("SMS Ayarlarınız başarıyla kayıt edilmiştir.", "✅ Kayıt Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                logger.HataLogEkle("SMS Ayarları kaydedilirken hata: " + ex.ToString());
+                MessageBox.Show("SMS Ayarlarınız kayıt edilememiştir." + Environment.NewLine + "Sebebi: " + ex.ToString(), "❎ Kayıt Başarısız", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void showSampleMessageButton_Click(object sender, EventArgs e)
+        {
+            Random random = new Random();
+
+            List<Restoran> restoranlar = restoranlarDataSource.List.OfType<Restoran>().ToList();
+            List<Kurye> kuryeler = kuryelerDataSource.List.OfType<Kurye>().ToList();
+            List<Bolge> bolgeler = bolgelerDataSource.List.OfType<Bolge>().ToList();
+            List<OdemeYontemi> odemeYontemleri = odemeYontemiDataSource.List.OfType<OdemeYontemi>().ToList();
+
+            string ornekSiparisNum = random.Next(0, 100).ToString();
+            string ornekRestoranIsim = restoranlar[random.Next(0, restoranlar.Count())].Isim;
+            string ornekKuryeIsim = kuryeler[random.Next(0, kuryeler.Count())].Isim;
+            string ornekBolgeIsim = bolgeler[random.Next(0, bolgeler.Count())].Isim;
+            string ornekOdemeYontemi = odemeYontemleri[random.Next(0, odemeYontemleri.Count())].YontemIsim;
+            string ornekTarihSaat = DateTime.Now.ToString();
+
+            StringBuilder builder = new StringBuilder(smsMessageTemplateTextBox.Text);
+
+            builder.Replace("%siparisno%", ornekSiparisNum);
+            builder.Replace("%restoranisim%", ornekRestoranIsim);
+            builder.Replace("%kuryeisim%", ornekKuryeIsim);
+            builder.Replace("%bolgeisim%", ornekBolgeIsim);
+            builder.Replace("%odemeyontemi%", ornekOdemeYontemi);
+            builder.Replace("%tarihsaat%", ornekTarihSaat);
+
+            MessageBox.Show(builder.ToString(), "Örnek SMS Çıktısı", MessageBoxButtons.OK);
+        }
+
+        private void adminPasswordRenewButton_Click(object sender, EventArgs e)
+        {
+           try
+            {
+                Kullanici admin = KullaniciService.AdminKullaniciGetir();
+
+                if (PasswordHelper.CreateMD5(adminOldPasswordTextBox.Text) == admin.Password)
+                {
+                    if (adminNewPasswordTextBox.Text == adminNewPasswordAgainTextBox.Text)
+                    {
+                        KullaniciService.AdminParolaDegistir(PasswordHelper.CreateMD5(adminNewPasswordTextBox.Text));
+                        adminSifreDegistirmeLabel.Text = "Yetkili şifresi değiştirildi ✅";
+                    }
+                    else
+                        adminSifreDegistirmeLabel.Text = "Yeni şifreler uyuşmuyor! ❎";
+                }
+                else
+                    adminSifreDegistirmeLabel.Text = "Eski şifre doğru değil! ❎";
+            }
+            catch(Exception ex)
+            {
+                adminSifreDegistirmeLabel.Text = "Hata meydana geldi, log\'a bakın!";
+                logger.HataLogEkle("Yetkili şifre değişikliği esnasında hata: " + ex.ToString());
             }
         }
         #endregion

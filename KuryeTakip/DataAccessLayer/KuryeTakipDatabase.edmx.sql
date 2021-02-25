@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 02/13/2021 23:28:48
+-- Date Created: 02/25/2021 15:31:14
 -- Generated from EDMX file: C:\Users\a.simsek\Desktop\Dev Projects\KuryeTakip\KuryeTakip\DataAccessLayer\KuryeTakipDatabase.edmx
 -- --------------------------------------------------
 
@@ -55,7 +55,8 @@ GO
 -- Creating table 'RestoranSet'
 CREATE TABLE [dbo].[RestoranSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Isim] nvarchar(max)  NOT NULL
+    [Isim] nvarchar(max)  NOT NULL,
+    [Tel] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -82,7 +83,10 @@ GO
 -- Creating table 'AyarSet'
 CREATE TABLE [dbo].[AyarSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [TelegramToken] nvarchar(max)  NOT NULL
+    [SMSUserCode] nvarchar(max)  NULL,
+    [SMSPassword] nvarchar(max)  NULL,
+    [SMSMessageHeader] nvarchar(max)  NULL,
+    [SMSMessageTemplate] nvarchar(max)  NULL
 );
 GO
 
@@ -90,6 +94,14 @@ GO
 CREATE TABLE [dbo].[OdemeYontemiSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [YontemIsim] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'KullaniciSet'
+CREATE TABLE [dbo].[KullaniciSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Username] nvarchar(max)  NOT NULL,
+    [Password] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -130,6 +142,12 @@ GO
 -- Creating primary key on [Id] in table 'OdemeYontemiSet'
 ALTER TABLE [dbo].[OdemeYontemiSet]
 ADD CONSTRAINT [PK_OdemeYontemiSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'KullaniciSet'
+ALTER TABLE [dbo].[KullaniciSet]
+ADD CONSTRAINT [PK_KullaniciSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

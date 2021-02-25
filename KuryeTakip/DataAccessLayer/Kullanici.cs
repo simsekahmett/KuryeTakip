@@ -12,12 +12,10 @@ namespace KuryeTakip.DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Ayar
+    public partial class Kullanici
     {
         public int Id { get; set; }
-        public string SMSUserCode { get; set; }
-        public string SMSPassword { get; set; }
-        public string SMSMessageHeader { get; set; }
-        public string SMSMessageTemplate { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }
